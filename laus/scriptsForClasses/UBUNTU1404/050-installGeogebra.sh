@@ -11,4 +11,4 @@ wget --quiet  http://www.geogebra.net/linux/office@geogebra.org.gpg.key -O - | s
 
 ## udate local repository and install
 apt-get update
-apt-get install geogebra44
+apt-get install geogebra5
