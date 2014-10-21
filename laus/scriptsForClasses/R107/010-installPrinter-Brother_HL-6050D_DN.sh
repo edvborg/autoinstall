@@ -22,4 +22,4 @@ fi
 #lpadmin -E -p KonfZi-Printer -v socket://10.1.13.91 -m 'foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Brother-HL-6050D_DN-Postscript.ppd' -L "Drucker im Konferenzzimmer" -E
 
 # try with HP Laserjet Emulation
-lpadmin -E -p KonfZi-Printer -v socket://10.1.8.91 -m 'gutenprint.5.2://hp-lj_4_plus' -L "Drucker im Konferenzzimmer" -E
+lpadmin -E -p KonfZi-Printer -v socket://10.1.7.91 -m 'gutenprint.5.2://hp-lj_4_plus' -L "Drucker im Konferenzzimmer" -E
