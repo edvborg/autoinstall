@@ -17,4 +17,3 @@ echo "lock-enabled=false" >> $SCHEMAS_DIR/$APP_UNITY_SETTINGS_FILE
 echo ""
 ## compile xml & settings files
 glib-compile-schemas $SCHEMAS_DIR
-

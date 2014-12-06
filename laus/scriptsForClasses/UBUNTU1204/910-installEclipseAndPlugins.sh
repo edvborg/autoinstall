@@ -19,6 +19,3 @@ cp -R $SOURCE_PATH/eclipse-dropins/lejos	/usr/share/eclipse/dropins
 
 ## install Python - Plugin
 cp -R $SOURCE_PATH/eclipse-dropins/python	/usr/share/eclipse/dropins
-
-
-

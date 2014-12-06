@@ -7,6 +7,3 @@ sed '/if [ $CURRENT_HOUR -eq "22" ]/ s/"22"/"23"/' $file > $newfile
 
 chmod 755 $newfile
 rm $file
-
-
-

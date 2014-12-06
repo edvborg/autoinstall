@@ -10,8 +10,3 @@ cp $file $newfile
 
 
 sed '/user:x:3101:1000/ s/user:x:3101:1000/user:x:3101:2000/' -i $file
-
-
-
-
-

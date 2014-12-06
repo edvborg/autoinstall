@@ -28,4 +28,3 @@ apt-get -y install libreoffice-pdfimport
 ## Vorschau von Libreoffice - Documenten im Firefox - Browser
 apt-get install browser-plugin-libreoffice
 
-

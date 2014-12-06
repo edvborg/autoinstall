@@ -35,4 +35,3 @@ cp  files/auto.pupils		/etc/
 cp  files/auto.teachers 	/etc/
 
 service autofs restart
-

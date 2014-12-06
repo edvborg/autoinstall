@@ -27,5 +27,3 @@ apt-get -y install hyphen-de myspell-de-at mythes-de
 apt-get -y install libreoffice-pdfimport
 # mozilla-libreoffice funktioniert nicht mehr
 #apt-get -y install mozilla-libreoffice
-
-

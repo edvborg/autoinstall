@@ -18,5 +18,3 @@ sed '/#GRUB_DISABLE_RECOVERY="true"/ s/#GRUB_DISABLE_RECOVERY="true"/GRUB_DISABL
 
 update-grub
 
-
-

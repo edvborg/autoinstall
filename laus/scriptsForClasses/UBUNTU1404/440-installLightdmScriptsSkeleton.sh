@@ -39,4 +39,3 @@ chmod 755 $SESSION_CLEANUP_SCRIPT
 
 
 service lightdm restart
- 

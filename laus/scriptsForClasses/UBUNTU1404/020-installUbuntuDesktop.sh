@@ -58,4 +58,3 @@ apt-get -y install p7zip p7zip-full
 apt-get -y install freemind
 ## Freemind Suggestions
 apt-get -y install freemind-plugins-help freemind-plugins-svg freemind-plugins-script freemind-browser
-

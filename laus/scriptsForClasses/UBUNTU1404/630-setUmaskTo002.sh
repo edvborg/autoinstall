@@ -11,7 +11,3 @@ cp $file $newfile
 
 ## String ersetzen
 sed '/^UMASK/ s/022/002/' -i $file
-
-
-
-

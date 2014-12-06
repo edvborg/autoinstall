@@ -21,5 +21,3 @@ fi
 #lpadmin -E -p KonfZi-Printer -v socket://10.1.15.91 -m 'drv:///hpcups.drv/hp-laserjet_p2055dn-pcl3.ppd' -L "Drucker im Konferenzzimmer AS - direkt" -E
 
 lpadmin -E -p KonfZi-Printer -v socket://r115pr01 -m 'drv:///hpcups.drv/hp-laserjet_p2055dn-pcl3.ppd' -L "Drucker im KonfZi AS - direkt" -E
-
-

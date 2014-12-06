@@ -23,5 +23,3 @@ chmod 750 /usr/bin/makeDesktopLinkForTestees.sh
 
 
 #service lightdm restart
-
-

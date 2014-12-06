@@ -18,5 +18,4 @@ fi
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
-lpadmin -E -p Raum-001-Printer -v socket://10.0.3.91 -m 'foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Lexmark-T644-Postscript.ppd' -L "Drucker im Raum-001" -E
-
+lpadmin -E -p Raum-003-Printer -v socket://10.0.3.91 -m 'foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Lexmark-T644-Postscript.ppd' -L "Drucker im Raum-003" -E

@@ -31,5 +31,3 @@ chmod 750 /usr/bin/blockWWWForTestees.sh
 
 
 #service lightdm restart
-
-

@@ -20,4 +20,3 @@ cp -v files/ldap.conf 		/etc/
 # hosts:          files dns [NOTFOUND=return] mdns4_minimal mdns4
 mv -v /etc/nsswitch.conf 	/etc/nsswitch.conf.original
 cp -v files/nsswitch.conf	/etc/
-

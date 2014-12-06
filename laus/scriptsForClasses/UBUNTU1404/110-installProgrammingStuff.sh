@@ -10,5 +10,3 @@ apt-get -y install jedit
 apt-get -y install geany
 apt-get -y install kate
 apt-get -y install vim
-
-
