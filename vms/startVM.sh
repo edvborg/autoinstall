@@ -15,7 +15,11 @@
 #	startVM  			starts Virtualmachine Windows.vdi with OS-Type Windows7 an USB on
 #	startVM	ubu Ubuntu usboff	starts Virtualmachine ubu.vdi with OS-Type Ubuntu an USB off
 #	startVM	ubu Ubuntu 		starts Virtualmachine ubu.vdi with OS-Type Ubuntu an USB on
-
+#
+#
+#
+# Create Variables and Directories ######################################################
+#
 echo "Set Variables"
 if [ -z $1 ];
 then
@@ -82,6 +86,22 @@ fi
 mkdir -p $MACHINE_WORK_DIR
 
 
+SCHUELER_DIR="/home/shares/schueler"
+echo "Directory for: " $SCHUELER_DIR
+
+LEHRMATERIAL_DIR="/home/shares/lehrmaterial"
+echo "Directory for: " $LEHRMATERIAL_DIR
+
+PROGRAMMES_DIR="/home/shares/programmes"
+echo "Directory for: " $PROGRAMMES_DIR
+
+CONFIG_WINONTOP_DIR=$MACHINE_STORAGE_DIR/configwinontop
+echo "Config Directory for WinOnTop: " $CONFIG_WINONTOP_DIR
+
+
+
+# Create Virtual Machine ################################################################
+#
 echo "Create Virtual Machine"
 VBoxManage --nologo createvm --name $MACHINE --register --basefolder $MACHINE_WORK_DIR
 # OS
@@ -136,28 +156,37 @@ VBoxManage setextradata $MACHINE GUI/ShowMiniToolBar no
 
 # Create Shared Folder
 # Folders, witch are mounted inside Virtual Windows every time, via script mountshares.cmd in .../Autostart
-echo "Create shared Folders"
-if [ -d /home/shares/schueler ];
+echo "Createing shared Folders"
+if [ -d $SCHUELER_DIR ];
 then
-	VBoxManage sharedfolder add $MACHINE --name schueler --hostpath /home/shares/schueler
+	echo "Create shared Folder for Directory: "$SCHUELER_DIR
+	VBoxManage sharedfolder add $MACHINE --name schueler --hostpath $SCHUELER_DIR
 fi
-if [ -d /home/shares/lehrmaterial ];
+if [ -d $LEHRMATERIAL_DIR ];
 then
-	VBoxManage sharedfolder add $MACHINE --name lehrmaterial --hostpath /home/shares/lehrmaterial
+	echo "Create shared Folder for Directory: "$LEHRMATERIAL_DIR
+	VBoxManage sharedfolder add $MACHINE --name lehrmaterial --hostpath $LEHRMATERIAL_DIR
 fi
-if [ -d /home/shares/programmes ];
+if [ -d $PROGRAMMES_DIR ];
 then
-	VBoxManage sharedfolder add $MACHINE --name programmes --hostpath /home/shares/programmes
+	$PROGRAMMES_DIR
+	VBoxManage sharedfolder add $MACHINE --name programmes --hostpath $PROGRAMMES_DIR
 fi
 
-echo "Create shared Folders for Home Directory: "$HOME
-VBoxManage --nologo sharedfolder add $MACHINE --name myHome --hostpath $HOME
+if [ -d $CONFIG_WINONTOP_DIR ];
+then
+	echo "Create shared Folder Configuration Directory: "$CONFIG_WINONTOP_DIR
+	VBoxManage --nologo sharedfolder add $MACHINE --name configwinontop --hostpath $CONFIG_WINONTOP_DIR
+fi
 
 if [ $USB = "usbon" ];
 then
-	echo "Create shared Folders for USB"
+	echo "Create shared Folder for USB"
 	VBoxManage sharedfolder add $MACHINE --name USB-Storage --hostpath /media --automount
 fi
+
+echo "Create shared Folder for Home Directory: "$HOME
+VBoxManage --nologo sharedfolder add $MACHINE --name myHome --hostpath $HOME
 
 
 echo "Start Virtual Machine"
