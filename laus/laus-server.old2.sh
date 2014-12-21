@@ -7,6 +7,7 @@
 # Shell Variables sourced from 
 # "LAUS calling Client"/etc/default/laus-setup
 . /etc/default/laus-setup
+
 ## ENABLE_AUTOUPDATE="yes"
 # Server hosting all LAUS - scripts:
 ## LAUS_SERVER="laus01"
@@ -20,7 +21,7 @@
 ## UPDATE_LOG_DIR="/var/log/laus"
 
 # Updatescripts may not be executed on LAUS-SERVER!
-if [ $(hostname) = ${LAUS_SERVER} ];
+if test $(hostname) = ${LAUS_SERVER}
 then
 	log_action_begin_msg "Updatescript may not run on  laus - Server!"
 	echo "Updatescript may not run on  laus - Server!"
@@ -33,33 +34,31 @@ fi
 
 # Function for executing all Scripts in Directory
 function executeScripts {
-	hc=$1
-	if [ -z ${hc} ];
+	if [ -z $1 ];
 	then
-		CLASSPATH="ALLCLASSES";
+		classHirarchy="ALLCLASSES";
 	else
-		CLASSPATH="ALLCLASSES."${hc//\//.};
+		classHirarchy="ALLCLASSES."$1;
 	fi
 
 	fileList=$(ls)
-	for file in ${fileList}; 
-	do
+	for file in ${fileList}; do
 		# test, if file is executable and does not end with ~
 		if [ -f ${file} -a -x ${file} -a ${file} = ${file%"~"} ];
 		then
 			# test, if script has already been executed on this workstation
-			if [ -f ${UPDATE_LOG_DIR}"/"${CLASSPATH}"."${file} ]
+			if [ -f ${UPDATE_LOG_DIR}"/"${classHirarchy}"."${file} ]
 			then
-				log_action_begin_msg "already executed --> "${CLASSPATH}"."${file}
-				#echo "already executed --> "${CLASSPATH}"."${file}
+				log_action_begin_msg "already executed --> "${classHirarchy}"."${file}
+				#echo "already executed --> "${classHirarchy}"."${file}
 			else
-				log_action_begin_msg "running LAUS script --> "${CLASSPATH}"."${file}
-				#echo "running LAUS script --> "${CLASSPATH}"."${file}
+				log_action_begin_msg "running LAUS script --> "${classHirarchy}"."${file}
+				#echo "running LAUS script --> "${classHirarchy}"."${file}
 				"./"${file} ${startParameter}
 				# if script has been executed, log it"
 				if [ $? -eq 0 ];
 				then
-					cp ${file} ${UPDATE_LOG_DIR}"/"${CLASSPATH}"."${file}
+					cp ${file} ${UPDATE_LOG_DIR}"/"${classHirarchy}"."${file}
 				fi
 			fi
 		fi
@@ -98,13 +97,19 @@ TESTSTRING=$(hostname)
 for ((length=${#TESTSTRING};  length > 0; length--)) 
 do
 	TESTSTRING=${TESTSTRING:0:length}
-	HOSTCLASSES=${HOSTCLASSES}" "$(grep ^${TESTSTRING}":" hostsToClasses | awk 'BEGIN { FS = ":" } { print $2 }')
+	if grep ^${TESTSTRING}";" hostsToClasses
+	then
+		HOSTCLASS=${HOSTCLASS}" "$(grep ^${TESTSTRING}";" hostsToClasses | awk 'BEGIN { FS = ";" } { print $2 }')
+		SUBHOSTCLASS=${SUBHOSTCLASS}" "$(grep ^${TESTSTRING}";" hostsToClasses | awk 'BEGIN { FS = ";" } { print $3 }')
+		SUBSUBHOSTCLASS=${SUBSUBHOSTCLASS}" "$(grep ^${TESTSTRING}";" hostsToClasses | awk 'BEGIN { FS = ";" } { print $4 }')
+	fi
 done
 
 # souround List of hosts with () to cast to array
-HOSTCLASSES=(${HOSTCLASSES})
+HOSTCLASS=(${HOSTCLASS})
+SUBHOSTCLASS=(${SUBHOSTCLASS})
+SUBSUBHOSTCLASS=(${SUBSUBHOSTCLASS})
 
-echo ${HOSTCLASSES[@]}
 log_action_begin_msg "LAUS START --------------------------------------"
 
 #### Startparameter mitteilen z.B: start, stop, cron
@@ -114,15 +119,30 @@ startParameter=$1
 cd scriptsForClasses
 executeScripts
 
-# run scripts for classes
+# run scripts for classes, sub- and subsubclasses
 
-for hostclass in ${HOSTCLASSES[@]}; do
+for hostclass in ${HOSTCLASS[@]}; do
 	if test -d ${hostclass}; 
 	then
-		CURRENTRIR=$(pwd)
 		cd ${hostclass};
 		executeScripts ${hostclass};
-		cd ${CURRENTRIR};
+		for subhostclass in ${SUBHOSTCLASS[@]}; do
+			if test -d ${subhostclass}; 
+			then
+				cd ${subhostclass};
+				executeScripts ${hostclass}"."${subhostclass};
+				for subsubhostclass in ${SUBSUBHOSTCLASS[@]}; do
+					if test -d ${subsubhostclass}; 
+					then
+						cd ${subsubhostclass};
+						executeScripts ${hostclass}"."${subhostclass}"."${subsubhostclass};
+						cd ..;
+					fi;
+				done;
+				cd ..;
+			fi;
+		done;
+		cd ..;
 	fi;
 done
 
