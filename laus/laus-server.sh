@@ -4,20 +4,20 @@
 . /lib/init/vars.sh
 . /lib/lsb/init-functions
 
-# Shell Variables sourced from 
-# "LAUS calling Client"/etc/default/laus-setup
+# Shell variables sourced from 
+# "LAUS calling client" from file /etc/default/laus-setup on clients filesystem
 . /etc/default/laus-setup
-## ENABLE_AUTOUPDATE="yes"
-# Server hosting all LAUS - scripts:
-## LAUS_SERVER="laus01"
-# Rootpath,where LAUS - directory is stored:
-## PATH_ON_LAUS_SERVER="/autoinstall"
-# Directory, relativ to PATH_ON_LAUS_SERVER, where laus_server.sh - script is stored:
-## LAUS_PATH="laus"
-# Mountpoint on client, for Serverdirectory
-## MOUNT_PATH_ON_CLIENT="/opt/autoinstall"
-# Path, where updatelogfiles are written to:
-## UPDATE_LOG_DIR="/var/log/laus"
+### ENABLE_AUTOUPDATE="yes"
+## Server hosting all LAUS - scripts:
+### LAUS_SERVER="laus01"
+## Rootpath,where LAUS - directory is stored:
+### PATH_ON_LAUS_SERVER="/autoinstall"
+## Directory, relativ to PATH_ON_LAUS_SERVER, where laus_server.sh - script is stored:
+### LAUS_PATH="laus"
+## Mountpoint on client, for Serverdirectory
+### MOUNT_PATH_ON_CLIENT="/opt/autoinstall"
+## Path, where updatelogfiles are written to:
+### UPDATE_LOG_DIR="/var/log/laus"
 
 # Updatescripts may not be executed on LAUS-SERVER!
 if [ $(hostname) = ${LAUS_SERVER} ];
@@ -31,23 +31,23 @@ fi
 ################## Helper Function ###################################################
 ######################################################################################
 
-# Function for executing all Scripts in Directory
+# Function for executing all scripts in directory
 function executeScripts {
 	hc=$1
 	if [ -z ${hc} ];
 	then
 		CLASSPATH="ALLCLASSES";
 	else
+		# replace / with .
 		CLASSPATH="ALLCLASSES."${hc//\//.};
 	fi
-
 	fileList=$(ls)
 	for file in ${fileList}; 
 	do
 		# test, if file is executable and does not end with ~
 		if [ -f ${file} -a -x ${file} -a ${file} = ${file%"~"} ];
 		then
-			# test, if script has already been executed on this workstation
+			# test, if script has already been executed and logged on this workstation
 			if [ -f ${UPDATE_LOG_DIR}"/"${CLASSPATH}"."${file} ]
 			then
 				log_action_begin_msg "already executed --> "${CLASSPATH}"."${file}
@@ -71,7 +71,7 @@ function executeScripts {
 ################## S T A R T   O F   S C R I P T #####################################
 ######################################################################################
 
-# set HOSTCLASS Variable from File hostsToClasses
+# set HOSTCLASSES variable from file hostsToClasses
 # check like tftp:
 # for hostname r001pc12
 # test following Strings:
@@ -82,20 +82,21 @@ function executeScripts {
 # #8: r
 #
 # and collect all information in:
-# HOSTCLASS, SUBHOSTCLASS and SUBSUBHOSTCLASS
+# HOSTCLASSES
 #
-# see: HOSTCLASS=${HOSTCLASS}" "$(grep ^${TESTSTRING}";" hostsToClasses | awk 'BEGIN { FS = ";" } { print $2 }')
-# and so on!
+# see: HOSTCLASSES=${HOSTCLASSES}" "$(grep ^${TESTSTRING}";" hostsToClasses | awk 'BEGIN { FS = ";" } { print $2 }')
 #
 # hostsToClasses in format:
-# HOSTNAME;HOSTCLASS;SUBHOSTCLASS;SUSUBHOSTCLASS
-# r001pc50;TEACHER BEAMER;BEAMER_1024x768
+# HOSTNAME:<List of Pathes>
+#
+# Example:
+# r001pc50:UBUNTU1404 UBUNTU1404/GNOME BEAMER
 # r001;R001
-# => HOSTCLASS for PC with hostname r001pc50: TEACHER BEAMER R001
-#    and SUBHOSTCLASS=BEAMER_1024x768
+#
+# => HOSTCLASSES for PC with hostname r001pc50: UBUNTU1404 UBUNTU1404/GNOME BEAMER R001
 #
 TESTSTRING=$(hostname)
-for ((length=${#TESTSTRING};  length > 0; length--)) 
+for ((length=${#TESTSTRING}; length > 0; length--)) 
 do
 	TESTSTRING=${TESTSTRING:0:length}
 	HOSTCLASSES=${HOSTCLASSES}" "$(grep ^${TESTSTRING}":" hostsToClasses | awk 'BEGIN { FS = ":" } { print $2 }')
@@ -104,20 +105,18 @@ done
 # souround List of hosts with () to cast to array
 HOSTCLASSES=(${HOSTCLASSES})
 
-echo ${HOSTCLASSES[@]}
 log_action_begin_msg "LAUS START --------------------------------------"
 
-#### Startparameter mitteilen z.B: start, stop, cron
+#### get Startparameter: for example: start, stop, cron
 startParameter=$1
 
-# run scripts for all hosts
+# run scripts for all hosts <=> ALLCLASSES
 cd scriptsForClasses
 executeScripts
 
-# run scripts for classes
-
+# run scripts for classes <=> pathes in directory scriptsForClasses
 for hostclass in ${HOSTCLASSES[@]}; do
-	if test -d ${hostclass}; 
+	if [ -d ${hostclass} ]; 
 	then
 		CURRENTRIR=$(pwd)
 		cd ${hostclass};
