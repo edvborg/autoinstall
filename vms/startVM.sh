@@ -95,7 +95,7 @@ echo "Directory for: " $LEHRMATERIAL_DIR
 PROGRAMMES_DIR="/home/shares/programmes"
 echo "Directory for: " $PROGRAMMES_DIR
 
-CONFIG_WINONTOP_DIR=$MACHINE_STORAGE_DIR/configwinontop
+CONFIG_WINONTOP_DIR=$MACHINE_STORAGE_DIR"/configwinontop"
 echo "Config Directory for WinOnTop: " $CONFIG_WINONTOP_DIR
 
 
