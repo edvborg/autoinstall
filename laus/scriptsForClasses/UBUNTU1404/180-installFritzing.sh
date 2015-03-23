@@ -27,7 +27,7 @@ FILESUFFIX=tar.bz2
 FILENAME=$NAME-$ARCHITECTURE.$FILESUFFIX
 
 # check, if Programm already exists from previous installation
-if [ -d $DESTINATION_PATH/$FILENAME ];
+if [ -d $DESTINATION_PATH/fritzing ];
 then
 	exit
 fi
@@ -44,7 +44,6 @@ rm $FILENAME
 
 # tricky to create link from "unknown directory"
 LONGNAME=$(ls | grep -e fritzing)
-echo $LONGNAME
 ln -s $LONGNAME fritzing
 
 chown -R root:root fritzing
