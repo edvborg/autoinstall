@@ -27,18 +27,18 @@ Achtung: zwischem letztem Zeilenumbruch und } muss eine Leerzeile stehen!!
 }' $newfile > $file
 
 ## Zeilen einfügen
-sed '{
+sed "{
 /Zeile suchen optional/ i \
 hier den anzufügenden Text mit \
 als Zeilenumbruch
-}' $newfile > $file
+}" $newfile > $file
 
 ## mehrere sed-Befehle hintereinander
-sed -e '{
+sed -e "{
 hier Befehle Nr1
-}' -e '{
+}" -e "{
 hier Befehle Nr2
-}' -e usw.
+}" -e usw.
 
 
 
