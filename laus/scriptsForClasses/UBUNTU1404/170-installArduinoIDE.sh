@@ -27,7 +27,7 @@ FILESUFFIX=tar.xz
 FILENAME=$NAME-$ARCHITECTURE.$FILESUFFIX
 
 # check, if Programm already exists from previous installation
-if [ -d $DESTINATION_PATH/arduino];
+if [ -d $DESTINATION_PATH/arduino ];
 then
 	exit
 fi

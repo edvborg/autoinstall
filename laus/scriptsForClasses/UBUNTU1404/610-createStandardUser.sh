@@ -8,3 +8,6 @@
 
 #useradd -u 3101 -g 513 -G nopasswdlogin -c user -b /home -s /bin/bash -m -N user
 useradd -u 3101 -g 1000 -G nopasswdlogin -c user -b /home -s /bin/bash -m -N user
+
+# for writing to arduino board user has to be in group dialout
+usermod -aG dialout user
