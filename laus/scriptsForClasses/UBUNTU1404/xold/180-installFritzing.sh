@@ -43,8 +43,10 @@ rm $FILENAME
 #chown -R root:root $NAME
 
 # tricky to create link from "unknown directory"
-LONGNAME=$(ls | grep -e fritzing)
-ln -s $LONGNAME fritzing
+# does not work
+# creates fancy ._* files in fritzing directory
+#LONGNAME=$(ls | grep -e $NAME)
+#ln -s $LONGNAME fritzing
 
 chown -R root:root fritzing
 
