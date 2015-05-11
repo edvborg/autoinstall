@@ -105,7 +105,7 @@ done
 # souround List of hosts with () to cast to array
 HOSTCLASSES=(${HOSTCLASSES})
 
-log_action_begin_msg "LAUS START --------------------------------------"
+log_action_begin_msg "LAUS START --------------------------------------" $(date)
 
 #### get Startparameter: for example: start, stop, cron
 startParameter=$1
@@ -125,7 +125,7 @@ for hostclass in ${HOSTCLASSES[@]}; do
 	fi;
 done
 
-log_action_begin_msg "LAUS STOP ---------------------------------------"
+log_action_begin_msg "LAUS STOP ---------------------------------------" $(date)
 
 
 
