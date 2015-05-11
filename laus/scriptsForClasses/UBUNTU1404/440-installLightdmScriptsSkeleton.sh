@@ -3,9 +3,9 @@
 CONF_DIR="/etc/lightdm/lightdm.conf.d"
 CONF_FILE="50-scripts.conf"
 
-GREETER_SETUP_SCRIPT="/usr/bin/greeterSetupScript.sh"
-SESSION_SETUP_SCRIPT="/usr/bin/sessionSetupScript.sh"
-SESSION_CLEANUP_SCRIPT="/usr/bin/sessionCleanupScript.sh"
+GREETER_SETUP_SCRIPT="/usr/local/sbin/greeterSetupScript.sh"
+SESSION_SETUP_SCRIPT="/usr/local/sbin/sessionSetupScript.sh"
+SESSION_CLEANUP_SCRIPT="/usr/local/sbin/sessionCleanupScript.sh"
 
 
 if [ ! -d $CONF_DIR ];
@@ -24,7 +24,7 @@ echo "#session-setup-script="$SESSION_SETUP_SCRIPT >> $CONF_DIR/$CONF_FILE
 echo "" >> $CONF_DIR/$CONF_FILE
 echo "#session-cleanup-script="$SESSION_CLEANUP_SCRIPT >> $CONF_DIR/$CONF_FILE
 
-# Create empty Scripts in /usr/bin
+# Create empty Scripts in /usr/local/sbin
 echo "#!/bin/bash" >> $GREETER_SETUP_SCRIPT
 echo "" >> $GREETER_SETUP_SCRIPT
 chmod 755 $GREETER_SETUP_SCRIPT

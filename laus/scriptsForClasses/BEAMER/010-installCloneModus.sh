@@ -3,9 +3,9 @@
 CONF_DIR="/etc/lightdm/lightdm.conf.d"
 CONF_FILE="50-scripts.conf"
 
-GREETER_SETUP_SCRIPT="/usr/bin/greeterSetupScript.sh"
-SESSION_SETUP_SCRIPT="/usr/bin/sessionSetupScript.sh"
-SESSION_CLEANUP_SCRIPT="/usr/bin/sessionCleanupScript.sh"
+GREETER_SETUP_SCRIPT="/usr/local/sbin/greeterSetupScript.sh"
+SESSION_SETUP_SCRIPT="/usr/local/sbin/sessionSetupScript.sh"
+SESSION_CLEANUP_SCRIPT="/usr/local/sbin/sessionCleanupScript.sh"
 
 
 # Activate greeter-setup-script
@@ -24,8 +24,8 @@ cp  files/clone-settings	/etc/default/
 chmod 644 /etc/default/clone-settings
 
 # Copy - clone - File
-cp  files/clone			/usr/bin/
-chmod 755 /usr/bin/clone
+cp  files/clone			/usr/local/bin/
+chmod 755 /usr/local/bin/clone
 
 
 service lightdm restart

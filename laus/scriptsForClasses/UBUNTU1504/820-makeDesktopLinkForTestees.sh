@@ -17,7 +17,7 @@ echo "makeDesktopLinkForTestees.sh start &" >> $SESSION_SETUP_SCRIPT
 echo ""
 
 
-# Copy File with DISABLE-ENABLE Code to /usr/bin
+# Copy File with DISABLE-ENABLE Code to /usr/local/sbin
 cp  files/makeDesktopLinkForTestees.sh			/usr/local/sbin/
 chmod 750 /usr/local/sbin/makeDesktopLinkForTestees.sh
 

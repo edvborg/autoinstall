@@ -24,7 +24,7 @@ echo "#session-setup-script="$SESSION_SETUP_SCRIPT >> $CONF_DIR/$CONF_FILE
 echo "" >> $CONF_DIR/$CONF_FILE
 echo "#session-cleanup-script="$SESSION_CLEANUP_SCRIPT >> $CONF_DIR/$CONF_FILE
 
-# Create empty Scripts in /usr/bin
+# Create empty Scripts in /usr/local/sbin
 echo "#!/bin/bash" >> $GREETER_SETUP_SCRIPT
 echo "" >> $GREETER_SETUP_SCRIPT
 chmod 755 $GREETER_SETUP_SCRIPT

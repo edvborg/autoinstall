@@ -25,7 +25,7 @@ echo ""
 echo "blockWWWForTestees.sh stop &" >> $SESSION_CLEANUP_SCRIPT
 echo ""
 
-# Copy File with DISABLE-ENABLE-WWW-Code to /usr/bin
+# Copy File with DISABLE-ENABLE-WWW-Code to /usr/local/sbin
 cp  files/blockWWWForTestees.sh			/usr/local/sbin/
 chmod 750 /usr/local/sbin/blockWWWForTestees.sh
 
