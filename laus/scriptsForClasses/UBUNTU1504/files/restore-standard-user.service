@@ -6,7 +6,7 @@ Before=laus.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/sbin/restore-standard-user.sh
+ExecStart=/usr/local/bin/restore-standard-user.sh
 
 [Install]
 WantedBy=multi-user.target
