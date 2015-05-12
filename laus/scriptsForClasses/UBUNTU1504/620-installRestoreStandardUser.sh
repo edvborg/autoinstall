@@ -4,8 +4,8 @@
 
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
-cp files/restore-standard-user.sh /usr/local/sbin
-chmod -R 755 /usr/local/sbin/restore-standard-user.sh
+cp files/restore-standard-user.sh /usr/local/bin
+chmod -R 755 /usr/local/bin/restore-standard-user.sh
 
 cp files/restore-standard-user.service /lib/systemd/system
 systemctl enable restore-standard-user.service

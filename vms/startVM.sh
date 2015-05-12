@@ -169,7 +169,7 @@ then
 fi
 if [ -d $PROGRAMMES_DIR ];
 then
-	$PROGRAMMES_DIR
+	echo "Create shared Folder for Directory: "$PROGRAMMES_DIR
 	VBoxManage sharedfolder add $MACHINE --name programmes --hostpath $PROGRAMMES_DIR
 fi
 

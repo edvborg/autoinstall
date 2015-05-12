@@ -3,9 +3,9 @@
 CONF_DIR="/etc/lightdm/lightdm.conf.d"
 CONF_FILE="50-scripts.conf"
 
-GREETER_SETUP_SCRIPT="/usr/local/sbin/greeterSetupScript.sh"
-SESSION_SETUP_SCRIPT="/usr/local/sbin/sessionSetupScript.sh"
-SESSION_CLEANUP_SCRIPT="/usr/local/sbin/sessionCleanupScript.sh"
+GREETER_SETUP_SCRIPT="/usr/local/bin/greeterSetupScript.sh"
+SESSION_SETUP_SCRIPT="/usr/local/bin/sessionSetupScript.sh"
+SESSION_CLEANUP_SCRIPT="/usr/local/bin/sessionCleanupScript.sh"
 
 
 # Activate session-setup-script
@@ -26,8 +26,8 @@ echo "blockWWWForTestees.sh stop &" >> $SESSION_CLEANUP_SCRIPT
 echo ""
 
 # Copy File with DISABLE-ENABLE-WWW-Code to /usr/local/sbin
-cp  files/blockWWWForTestees.sh			/usr/local/sbin/
-chmod 750 /usr/local/sbin/blockWWWForTestees.sh
+cp  files/blockWWWForTestees.sh			/usr/local/bin/
+chmod 750 /usr/local/bin/blockWWWForTestees.sh
 
 
 #service lightdm restart
