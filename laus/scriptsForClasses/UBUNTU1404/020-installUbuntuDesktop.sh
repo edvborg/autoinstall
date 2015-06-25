@@ -18,6 +18,9 @@ apt-get -y install compizconfig-settings-manager
 apt-get -y install language-pack-gnome-de
 apt-get -y install firefox-locale-de
 
+## install feature to open terminal from nautilus filemanager
+apt-get -y install nautilus-open-terminal
+
 ## Additional Chromium - Browser
 apt-get -y install chromium-browser chromium-browser-l10n
 

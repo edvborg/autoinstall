@@ -2,6 +2,7 @@
 
 ## Versionssystem
 apt-get -y install git
+apt-get -y install gitk
 
 ## C++ - Programming - Stuff
 apt-get -y install g++
