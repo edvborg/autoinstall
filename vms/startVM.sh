@@ -195,6 +195,8 @@ echo "Start Virtual Machine"
 VirtualBox --startvm $MACHINE --fullscreen
 
 echo "Restore all Virtualbox Config - Directories"
+echo "Wait for 2 seconds to shutdown virtual machine"
+sleep 2
 rm -R $HOME/.config/VirtualBox
 rm -R $MACHINE_WORK_DIR
 echo "Restore original .config/VirtualBox Directory if exists."
