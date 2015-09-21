@@ -33,13 +33,13 @@ fi
 
 # Function for executing all scripts in directory
 function executeScripts {
-	hc=$1
-	if [ -z ${hc} ];
+	path=$1
+	if [ -z ${path} ];
 	then
 		CLASSPATH="ALLCLASSES";
 	else
 		# replace / with .
-		CLASSPATH="ALLCLASSES."${hc//\//.};
+		CLASSPATH="ALLCLASSES."${path//\//.};
 	fi
 	fileList=$(ls)
 	for file in ${fileList}; 
@@ -72,14 +72,17 @@ function executeScripts {
 ######################################################################################
 
 # set HOSTCLASSES variable from file hostsToClasses
-# check like tftp:
+# check like similar to tftp:
 # for hostname r001pc12
 # test following Strings:
-# #1: r001pc12
-# #2: r001pc1
-# #3. r001pc
-# ...
-# #8: r
+# #1: r
+# #2: r0
+# #3: r00
+# #4: r001
+# #5: r001p
+# #6: r001pc
+# #7: r001pc1
+# #8: r001pc12
 #
 # and collect all information in:
 # HOSTCLASSES
@@ -89,14 +92,16 @@ function executeScripts {
 # hostsToClasses in format:
 # HOSTNAME:<List of Pathes>
 #
-# Example:
-# r001pc50:UBUNTU1404 UBUNTU1404/GNOME BEAMER
-# r001;R001
+# Example: for lines in hostsToClasses
 #
-# => HOSTCLASSES for PC with hostname r001pc50: UBUNTU1404 UBUNTU1404/GNOME BEAMER R001
+# r001:UBUNTU1404 UBUNTU1404/GNOME R001
+# r001pc50: BEAMER
+# 
+# => $HOSTCLASSES for PC with hostname r001xxxx: UBUNTU1404 UBUNTU1404/GNOME R001
+# => $HOSTCLASSES for PC with hostname r001pc50: UBUNTU1404 UBUNTU1404/GNOME R001 BEAMER
 #
 TESTSTRING=$(hostname)
-for ((length=${#TESTSTRING}; length > 0; length--)) 
+for ((length=1; length<=${#TESTSTRING}; length++)) 
 do
 	TESTSTRING=${TESTSTRING:0:length}
 	HOSTCLASSES=${HOSTCLASSES}" "$(grep ^${TESTSTRING}":" hostsToClasses | awk 'BEGIN { FS = ":" } { print $2 }')
@@ -115,10 +120,10 @@ cd scriptsForClasses
 executeScripts
 
 # run scripts for classes <=> pathes in directory scriptsForClasses
+CURRENTRIR=$(pwd)
 for hostclass in ${HOSTCLASSES[@]}; do
 	if [ -d ${hostclass} ]; 
 	then
-		CURRENTRIR=$(pwd)
 		cd ${hostclass};
 		executeScripts ${hostclass};
 		cd ${CURRENTRIR};
