@@ -100,10 +100,10 @@ function executeScripts {
 # => $HOSTCLASSES for PC with hostname r001xxxx: UBUNTU1404 UBUNTU1404/GNOME R001
 # => $HOSTCLASSES for PC with hostname r001pc50: UBUNTU1404 UBUNTU1404/GNOME R001 BEAMER
 #
-TESTSTRING=$(hostname)
-for ((length=1; length<=${#TESTSTRING}; length++)) 
+HOSTNAME=$(hostname)
+for ((length=1; length<=${#HOSTNAME}; length++)) 
 do
-	TESTSTRING=${TESTSTRING:0:length}
+	TESTSTRING=${HOSTNAME:0:length}
 	HOSTCLASSES=${HOSTCLASSES}" "$(grep ^${TESTSTRING}":" hostsToClasses | awk 'BEGIN { FS = ":" } { print $2 }')
 done
 
