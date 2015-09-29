@@ -4,3 +4,4 @@ xBigFiles
 VirtualBox_VMs
 *.directory
 *~
+.Trash*
