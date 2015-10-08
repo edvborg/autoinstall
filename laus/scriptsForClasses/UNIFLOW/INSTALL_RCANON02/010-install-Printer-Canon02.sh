@@ -29,5 +29,4 @@ dpkg -i $SOURCE_PATH/o157cde_linux_CQueDEB_v209_64.deb
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
-lpadmin -E -p KonfZi-Printer -v socket://r107pr04 -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Drucker im Konferenzzimmer"  -E
-
+lpadmin -E -p Printer-Canon-02 -v socket://rcanon02 -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Printer-Canon-02" -E

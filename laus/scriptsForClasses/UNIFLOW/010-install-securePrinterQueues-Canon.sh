@@ -28,5 +28,11 @@ dpkg -i $SOURCE_PATH/o157cde_linux_CQueDEB_v209_64.deb
 # -L		Provides a textual location of the destination.
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
+#
+# Install Queue for Black/White
+lpadmin -E -p securePrint_sw -v lpd://uniflow01/securePrint_sw -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Sichere Druckverbindung UNIFLOW s/w" -E
 
-lpadmin -E -p Matura-Kopierer -v socket://r006pr01 -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Matura-Kopierer" -E
+# Install Queue for Color
+lpadmin -E -p securePrint_color -v lpd://uniflow01/securePrint_color -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Sichere Druckverbindung UNIFLOW color" -E
+# set Standard to Color for Queue Color
+lpoptions -p securePrint_color -o ColourModel=Colour
