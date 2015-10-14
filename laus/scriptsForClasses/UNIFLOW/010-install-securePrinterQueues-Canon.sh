@@ -36,3 +36,8 @@ lpadmin -E -p securePrint_sw -v lpd://uniflow01/securePrint_sw -m 'lsb/usr/cel/c
 lpadmin -E -p securePrint_color -v lpd://uniflow01/securePrint_color -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Sichere Druckverbindung UNIFLOW color" -E
 # set Standard to Color for Queue Color
 lpoptions -p securePrint_color -o ColourModel=Colour
+
+lpadmin -d securePrint_sw
+
+initctl stop cups
+initctl start cups
