@@ -57,6 +57,9 @@ apt-get -y install icedtea-plugin
 ## Gimp
 apt-get -y install gimp
 
+## Inkscape Vectordrawprogram
+apt-get -y install inkscape
+
 # Zip
 apt-get -y install p7zip p7zip-full
 
