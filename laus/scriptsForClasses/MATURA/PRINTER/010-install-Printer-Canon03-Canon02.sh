@@ -28,5 +28,18 @@ dpkg -i $SOURCE_PATH/o157cde_linux_CQueDEB_v209_64.deb
 # -L		Provides a textual location of the destination.
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
-
+#
+# Install Printer Canon-03
 lpadmin -E -p Printer-Matura -v socket://rcanon03 -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Printer-Matura" -E
+#
+# Install Printer Canon-02
+lpadmin -E -p Printer-Matura-Reserve -v socket://rcanon02 -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Printer-Matura-Reserve" -E
+#
+# set Standard to Color for both
+lpoptions -p Printer-Matura -o ColourModel=Colour
+lpoptions -p Printer-Matura-Reserve -o ColourModel=Colour
+
+lpadmin -d Printer-Matura
+
+initctl stop cups
+initctl start cups
