@@ -14,5 +14,5 @@ apt-get -y install libreoffice libreoffice-report-builder libreoffice-writer2lat
 ## LibreOffice German Dictionary
 ## additional Libreoffice - Packages
 ## Vorschau von Libreoffice - Documenten im Firefox - Browser
-apt-get -y install libreoffice-l10n-de hyphen-de mythes-de hunspell hunspell-de-at libreoffice-pdfimport browser-plugin-libreoffice
+apt-get -y install libreoffice-l10n-de hyphen-de mythes-de hunspell hunspell-de-at libreoffice-pdfimport
 
