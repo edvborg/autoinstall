@@ -7,7 +7,7 @@ GREETER_SETUP_SCRIPT="/usr/local/bin/greeterSetupScript.sh"
 SESSION_SETUP_SCRIPT="/usr/local/bin/sessionSetupScript.sh"
 SESSION_CLEANUP_SCRIPT="/usr/local/bin/sessionCleanupScript.sh"
 
-HOOKED_SCRIPT=blockWWWForTestees.sh
+HOOKED_SCRIPT=blockEnglishDictionaryForTestees.sh
 
 ## hooked script will be added to SESSION_SETUP_SCRIPT & SESSION_CLEANUP_SCRIPT of lightdm
 
