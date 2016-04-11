@@ -8,5 +8,5 @@
 SOURCE_PATH=/home/user.save/
 DEST_PATH=/home/user/
 
-rsync -a --delete $SOURCE_PATH $DEST_PATH
+rsync -a --delete --chmod=user:root $SOURCE_PATH $DEST_PATH
 
