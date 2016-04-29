@@ -5,5 +5,5 @@
 # Groupnummer 1000 (=worker) used as dummy - group, because LDAP - connetion dos not exist yet
 
 # for writing to arduino board user has to be in group dialout
-useradd --uid 3101 --no-user-group --gid 1000 --groups nopasswdlogin,dialout --comment "Default-User" --base-dir /home --create-home --shell /bin/bash user
+useradd --uid 3101 --no-user-group --gid 1000 --groups nopasswdlogin,dialout --comment "user" --base-dir /home --create-home --shell /bin/bash user
 

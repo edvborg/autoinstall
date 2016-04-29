@@ -1,7 +1,7 @@
 #! /bin/bash
 
 ## C++ - Programming - Stuff
-apt-get -y install g++ scribes jedit geany kate vim
+apt-get -y install g++ jedit geany kate vim
 
 ## Java - Programming Stuff
-apt-get -y install openjdk-7-jdk
+# apt-get -y install openjdk-7-jdk
