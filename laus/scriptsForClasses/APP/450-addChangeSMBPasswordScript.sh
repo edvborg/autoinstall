@@ -1,7 +1,7 @@
 #! /bin/bash
 
 FILENAME=changepasswd
-BINPATH=/usr/bin
+BINPATH=/usr/local/bin
 
 cp -v files/$FILENAME 	$BINPATH
 chown root:root $BINPATH/$FILENAME
