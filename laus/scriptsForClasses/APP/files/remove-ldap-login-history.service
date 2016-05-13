@@ -1,0 +1,11 @@
+[Unit]
+Description=Remove LDAP logins from AccountsService and lightdm
+Requires=local-fs.target
+After=local-fs.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/remove-ldap-login-history.sh
+
+[Install]
+WantedBy=multi-user.target
