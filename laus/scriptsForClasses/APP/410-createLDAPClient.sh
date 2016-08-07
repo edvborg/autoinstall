@@ -1,7 +1,8 @@
 #! /bin/bash
 
 # https://help.ubuntu.com/community/LDAPClientAuthentication
-# https://help.ubuntu.com/13.10/serverguide/openldap-server.html
+# https://help.ubuntu.com/lts/serverguide/openldap-server.html
+
 # has to be one line
 DEBIAN_FRONTEND=noninteractive apt-get -y -q install ldap-auth-client nscd libpam-cracklib
 
@@ -9,7 +10,12 @@ DEBIAN_FRONTEND=noninteractive apt-get -y -q install ldap-auth-client nscd libpa
 # pam_cracklib.so <= needed for passwordchange!!
 
 
-# copy correct ldap.conf - file with cn=ldapread,dc=app,dc=net to /etc
+# configuration of /etc/ldap.conf is normalli done by:
+# dpkg-reconfigure ldap-auth-config  when you install the package ldap-auth-client.deb
+# because we skiped the standard configuration we copy our /etc/ldap.conf 
+# copy correct ldap.conf - file with security special cn=ldapread,dc=app,dc=net to /etc
+# we use ldapread instead admin-user, because ldapread just has read-rights instead all rights.
+#
 mv -v /etc/ldap.conf 		/etc/ldap.conf.original
 cp -v files/ldap.conf 		/etc/
 
@@ -17,6 +23,5 @@ cp -v files/ldap.conf 		/etc/
 # passwd:         files ldap
 # group:          files ldap
 # shadow:         files ldap
-# hosts:          files dns [NOTFOUND=return] mdns4_minimal mdns4
-mv -v /etc/nsswitch.conf 	/etc/nsswitch.conf.original
-cp -v files/nsswitch.conf	/etc/
+
+auth-client-config -t nss -p lac_ldap
