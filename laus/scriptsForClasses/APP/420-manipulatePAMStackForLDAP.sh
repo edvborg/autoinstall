@@ -30,4 +30,4 @@ Auth:
 pam-auth-update --package --force my_groups
 
 
-/etc/init.d/nscd restart
+systemctl restart nscd.service 
