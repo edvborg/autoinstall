@@ -13,6 +13,8 @@
 
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
 
 dpkg -i $SOURCE_PATH/tipp10_debian_v2-1-0.deb
 

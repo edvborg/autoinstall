@@ -2,6 +2,9 @@
 
 #apt-get -y update
 
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
+
 ## Secureshell - Server
 ## Midnight - Commander
 ## git - Version Control
