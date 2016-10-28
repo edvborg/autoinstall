@@ -31,6 +31,8 @@ lpadmin -E -p Raum-005-Printer -v socket://r005pr01 -m 'openprinting-ppds:0/ppd/
 #foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Brother-HL-7050-Postscript.ppd Brother HL-7050 Foomatic/Postscript
 #foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Brother-HL-7050-pxlmono.ppd Brother HL-7050 Foomatic/pxlmono
 
-
-initctl stop cups
-initctl start cups
+# upstart-command initctl does not work with systemd
+# we drop it, so printer install will work for both services
+# printer will be present on the next start
+#initctl stop cups
+#initctl start cups
