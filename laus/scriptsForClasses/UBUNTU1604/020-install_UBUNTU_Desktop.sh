@@ -2,6 +2,9 @@
 
 #apt-get -y update
 
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
+
 ## Full Ubuntu - Desktop
 ## install feature to open terminal from nautilus filemanager
 ## More Settings for Compiz

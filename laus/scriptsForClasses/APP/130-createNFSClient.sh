@@ -1,6 +1,10 @@
 #! /bin/bash
 
 #apt-get -y update
+
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
+
 apt-get -y install nfs-common autofs
 
 # before 12.04

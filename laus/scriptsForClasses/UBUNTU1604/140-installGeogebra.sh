@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
+
 ## write repository-URL to file
 FILE="/etc/apt/sources.list.d/geogebra.list"
 

@@ -5,7 +5,11 @@
 #then
 #  add-apt-repository -y ppa:libreoffice/libreoffice-4-1
 #fi
+
 #apt-get -y update
+
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
 
 ## LibreOffice full Package
 apt-get -y install libreoffice libreoffice-report-builder libreoffice-writer2latex writer2latex libreoffice-help-de

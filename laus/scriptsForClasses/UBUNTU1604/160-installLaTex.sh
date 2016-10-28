@@ -2,6 +2,9 @@
 
 #apt-get -y update
 
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
+
 # LaTeX mit Editor - Kile
 #sudo apt-add-repository -y http://ppa.launchpad.net/texlive-backports/ppa/ubuntu
 #if [ $(lsb_release -r -s) = "12.04" ];

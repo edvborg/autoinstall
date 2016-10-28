@@ -1,5 +1,10 @@
 #! /bin/bash
 
+#apt-get -y update
+
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
+
 ## C++ - Programming - Stuff
 apt-get -y install g++ jedit geany kate vim
 
