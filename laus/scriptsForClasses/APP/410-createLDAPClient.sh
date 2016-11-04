@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # https://help.ubuntu.com/community/LDAPClientAuthentication
 # https://help.ubuntu.com/lts/serverguide/openldap-server.html

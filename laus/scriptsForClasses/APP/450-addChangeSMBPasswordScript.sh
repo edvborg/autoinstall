@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # for use of smbpasswd we need package samba-common-bin
 apt-get -y install samba-common-bin

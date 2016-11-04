@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 file="/etc/passwd"
 if ! test -f $file".original"; then

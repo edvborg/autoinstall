@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 file="/etc/login.defs"
 if ! test -f $file".original"; then

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 file="/etc/default/grub"
 if ! test -f $file".original"; then

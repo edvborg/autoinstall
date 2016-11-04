@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # quiet installation
 export DEBIAN_FRONTEND=noninteractive

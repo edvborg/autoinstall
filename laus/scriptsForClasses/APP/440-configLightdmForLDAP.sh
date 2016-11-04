@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 CONF_DIR="/etc/lightdm/lightdm.conf.d"
 #CONF_DIR="test-dir"

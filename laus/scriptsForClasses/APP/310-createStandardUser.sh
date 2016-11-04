@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # add Standard User "user" with primary group 2000 = "Default Users" coming from LDAP
 # LDAP - connetion has to be setup frist
