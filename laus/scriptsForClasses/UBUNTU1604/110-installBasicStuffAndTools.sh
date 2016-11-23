@@ -10,7 +10,9 @@ export DEBIAN_FRONTEND=noninteractive
 ## git - Version Control
 ## add exfat - filesystem
 ## zip
-apt-get -y install openssh-server mc git gitk exfat-fuse exfat-utils p7zip p7zip-full
+## Additional Chromium - Browser
+apt-get -y install openssh-server mc htop git gitk exfat-fuse exfat-utils p7zip p7zip-full chromium-browser chromium-browser-l10n
+
 
 ## Microsoft - Corefonts (Arial, Times, ...)
 ## Stop script to ask for interactive EULA
