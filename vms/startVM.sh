@@ -123,7 +123,7 @@ VBoxManage --nologo modifyvm $MACHINE 	--nictype1 82540EM
 VBoxManage --nologo modifyvm $MACHINE 	--nic1 nat
 #VBoxManage --nologo modifyvm $MACHINE 	--macaddress1 0800276D37F9
 # Set Address space for internal NetworkAdapter 
-VBoxManage --nologo modifyvm $MACHINE   --natnet1 10.250.250.0/24
+VBoxManage --nologo modifyvm $MACHINE   --natnet1 192.168.254.0/24
 # AudioAdapter
 VBoxManage --nologo modifyvm $MACHINE 	--audio alsa --audiocontroller hda
 
