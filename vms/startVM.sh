@@ -60,7 +60,7 @@ MACHINE_WORK_DIR=/tmp/${USER}_vms
 echo "Working Directory for Current Running VM: " $MACHINE_WORK_DIR
 
 # Set Ramsize for Host
-HOST_RAM=$((1024 + 0))
+HOST_RAM=$((2048 + 0))
 # Get available Ramsize from Host
 VM_RAM=$(cat /proc/meminfo | grep MemTotal: | awk -F' ' '{ print $2 }' )
 # Ramsize im MB
