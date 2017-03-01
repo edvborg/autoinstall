@@ -39,5 +39,3 @@ lpoptions -p securePrint_color -o ColourModel=Colour
 # set Standard Print-Queue
 lpadmin -d securePrint_sw
 
-initctl stop cups
-initctl start cups
