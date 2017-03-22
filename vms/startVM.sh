@@ -20,6 +20,16 @@
 #
 # Create Variables and Directories ######################################################
 #
+function killInotifyWait()
+{
+	# check, if an inotifywait process is running and kill it
+	LOST_INOTIFY=$(ps ef | grep "inotifywait -e close_write $DIRECTORY_TO_MONITOR" | grep -v grep |  awk '{ print $1 }')
+	if [ ! "$LOST_INOTIFY" = "" ];
+	then
+		kill $LOST_INOTIFY
+	fi
+}
+
 echo "Set Variables"
 if [ -z $1 ];
 then
@@ -85,7 +95,7 @@ then
 fi
 mkdir -p $MACHINE_WORK_DIR
 
-
+# Directories for shares
 SCHUELER_DIR="/home/shares/schueler"
 echo "Directory for: " $SCHUELER_DIR
 
@@ -99,6 +109,18 @@ CONFIG_WINONTOP_DIR=$MACHINE_STORAGE_DIR"/configwinontop"
 echo "Config Directory for WinOnTop: " $CONFIG_WINONTOP_DIR
 
 
+# Directories for PDF - Spooler
+DIRECTORY_TO_MONITOR="$HOME/pdf-spooler"
+echo "Spooler Directory for PDF-Printer >>Printer_sw<< printing from  WinOnTop: " $DIRECTORY_TO_MONITOR
+
+DIRECTORY_TO_MONITOR_FOR_COLOR="$DIRECTORY_TO_MONITOR/color"
+echo "Spooler Directory for PDF-Printer >>Printer_color<< printing from  WinOnTop: " $DIRECTORY_TO_MONITOR_FOR_COLOR
+
+
+# check, if Color-Printer available
+# COLOR_PRINTER_NAME=Printer-Color
+COLOR_PRINTER_NAME=$(lpstat -p | grep color | awk '{ print $2 }')
+echo "Color Printer: " $COLOR_PRINTER_NAME
 
 # Create Virtual Machine ################################################################
 #
@@ -189,14 +211,50 @@ echo "Create shared Folder for Home Directory: "$HOME
 VBoxManage --nologo sharedfolder add $MACHINE --name myHome --hostpath $HOME
 
 
+# Create PDF - Spooler Monitor ################################################################
+#
+# create spooler directory, if it does not exist
+if [ ! -d $DIRECTORY_TO_MONITOR ];
+then
+	mkdir -p $DIRECTORY_TO_MONITOR_FOR_COLOR
+fi
+
+# check for a lost inotifywait process
+killInotifyWait
+
+# start monitoring for $DIRECTORY_TO_MONITOR in background (see &)
+# and sent files to standard printer
+inotifywait -e close_write $DIRECTORY_TO_MONITOR -m -r --format "%w%f" | \
+while read PATH_AND_FILE; 
+do 
+	# if $DIRECTORY_TO_MONITOR_FOR_COLOR not in filepath, filepath stays unchanged,
+	# and file must exist in $DIRECTORY_TO_MONITOR
+	if [ "${PATH_AND_FILE#"$DIRECTORY_TO_MONITOR_FOR_COLOR"}" = "$PATH_AND_FILE" ];
+	then
+		echo lp "$PATH_AND_FILE"
+		lp "$PATH_AND_FILE" 
+	else 
+		if [ ! "$COLOR_PRINTER_NAME" = "" ];
+		then
+			echo "lp -d $COLOR_PRINTER_NAME" "$PATH_AND_FILE" 
+			lp -d $COLOR_PRINTER_NAME $PATH_AND_FILE
+		fi
+	fi
+	echo rm "$PATH_AND_FILE"; 
+done &
+
+# Starts VM ################################################################
+#
 echo "Start Virtual Machine"
 # Starts VM and return to this Script, when VM shuts down
 #VBoxManage startvm $MACHINE
 VirtualBox --startvm $MACHINE --fullscreen
 
+# Restore Directories/Kill PDF - Spooler Monitor ##############################################
+#
 echo "Restore all Virtualbox Config - Directories"
 echo "Wait for 2 seconds to shutdown virtual machine"
-sleep 2
+sleep 5
 rm -R $HOME/.config/VirtualBox
 rm -R $MACHINE_WORK_DIR
 echo "Restore original .config/VirtualBox Directory if exists."
@@ -204,3 +262,9 @@ if [ -d $HOME/.VirtualBox.$USER ];
 then
 	mv $HOME/.VirtualBox.$USER $HOME/.config/VirtualBox
 fi
+
+# kill running inotify
+killInotifyWait
+# remove spooler directory
+rm -r $DIRECTORY_TO_MONITOR
+
