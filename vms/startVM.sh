@@ -237,10 +237,11 @@ do
 		if [ ! "$COLOR_PRINTER_NAME" = "" ];
 		then
 			echo "lp -d $COLOR_PRINTER_NAME" "$PATH_AND_FILE" 
-			lp -d $COLOR_PRINTER_NAME $PATH_AND_FILE
+			lp -d "$COLOR_PRINTER_NAME" "$PATH_AND_FILE"
 		fi
 	fi
 	echo rm "$PATH_AND_FILE"; 
+	rm "$PATH_AND_FILE"; 
 done &
 
 # Starts VM ################################################################
