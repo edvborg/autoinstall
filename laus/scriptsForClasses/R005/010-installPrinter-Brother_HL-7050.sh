@@ -24,6 +24,9 @@ sleep 30
 
 lpadmin -E -p Raum-005-Printer -v socket://r005pr01 -m 'openprinting-ppds:0/ppd/openprinting/Brother/BR7050_2_GPL.ppd' -L "Drucker im Raum-005" -E
 
+# set as Default Printer
+lpadmin -d Raum-005-Printer
+
 # Alternatives
 #gutenprint.5.2://brother-hl-7050/expert Brother HL-7050 - CUPS+Gutenprint v5.2.10-pre2
 #openprinting-ppds:0/ppd/openprinting/Brother/BR7050_2_GPL.ppd Brother HL-7050 BR-Script3

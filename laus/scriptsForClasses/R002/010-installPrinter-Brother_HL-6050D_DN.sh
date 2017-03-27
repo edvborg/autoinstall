@@ -29,3 +29,6 @@ fi
 
 lpadmin -E -p R002-Printer -v socket://r002pr01 -m 'foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/HP-LaserJet_4M-ljet4.ppd' -L "Drucker im Raum 002" -E
 
+# set as Default Printer
+lpadmin -d R002-Printer
+

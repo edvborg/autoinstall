@@ -19,3 +19,7 @@ fi
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
 lpadmin -E -p Raum-Biblio-Printer -v socket://r007pr02 -m 'openprinting-ppds:0/ppd/openprinting/Kyocera/de/Kyocera_FS-2000D_de.ppd' -L "Drucker in der Bibliothek" -E
+
+# set as Default Printer
+lpadmin -d Raum-Biblio-Printer
+

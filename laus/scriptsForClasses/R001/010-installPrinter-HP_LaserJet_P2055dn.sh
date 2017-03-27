@@ -19,3 +19,7 @@ fi
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
 lpadmin -E -p Raum-001-Printer -v socket://r001pr01 -m 'drv:///hpcups.drv/hp-laserjet_p2055dn-pcl3.ppd' -L "Drucker im Raum-001" -E
+
+# set as Default Printer
+lpadmin -d Raum-001-Printer
+

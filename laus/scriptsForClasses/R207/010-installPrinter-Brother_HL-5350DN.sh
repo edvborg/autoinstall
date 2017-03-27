@@ -23,4 +23,6 @@ lpadmin -E -p Raum-207-Printer -v socket://r207pr01 -m 'foomatic-db-compressed-p
 # second possibility
 #lpadmin -E -p Raum-207-Printer -v socket://r207pr01 -m 'openprinting-ppds:0/ppd/openprinting/Brother/BR5350_2_GPL.ppd' -L "Drucker im Raum-207" -E
 
+# set as Default Printer
+lpadmin -d Raum-207-Printer
 
