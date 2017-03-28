@@ -1,0 +1,51 @@
+#
+# This an example of a text file containing hardware addresses 
+#
+# File structure
+# --------------
+# - blank lines are ignored
+# - comment lines are ignored (lines starting with a hash mark '#')
+# - other lines are considered valid records and can have 3 columns:
+#
+#       Hardware address, IP address, destination port
+#
+#   the last two are optional, in which case the following defaults
+#   are used:
+#
+#       IP address: 255.255.255.255 (the limited broadcast address)
+#       port:       9 (the discard port)
+#
+# wakeonlan -f r004.wol
+
+#host r004pc01
+44:37:E6:B5:41:22
+#host r004pc02 
+44:37:E6:B5:41:4F
+#host r004pc03
+44:37:E6:70:7E:D3
+#host r004pc04
+44:37:E6:B8:64:63
+#host r004pc05
+44:37:E6:B7:78:BF
+#host r004pc06
+44:37:E6:B7:44:41
+#host r004pc07
+70:F3:95:01:1A:41
+#host r004pc08
+70:F3:95:01:19:4E
+#host r004pc09
+70:F3:95:01:1A:7B
+#host r004pc10
+70:F3:95:01:19:B8
+#host r004pc11
+40:2C:F4:EC:A0:B7
+#host r004pc12
+40:2C:F4:EC:A4:41
+#host r004pc13
+FC:4D:D4:39:19:C4
+#host r004pc14
+00:24:7E:0A:97:54
+#host r004pc50
+EC:A8:6B:C2:3C:D3
+
+
