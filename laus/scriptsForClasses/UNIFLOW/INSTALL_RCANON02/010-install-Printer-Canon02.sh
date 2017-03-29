@@ -9,14 +9,9 @@ fi
 
 . /etc/default/laus-setup
 
-apt-get update
-
-apt-get install libjpeg62
-
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
-#dpkg -i $SOURCE_PATH/g148bde_lindeb64_0207.deb
-dpkg -i $SOURCE_PATH/o157cde_linux_CQueDEB_v209_64.deb
+dpkg -i $SOURCE_PATH/CQue_v3.0.4_Linux_64_DE.deb
 
 # Find Printer with:
 # lpinfo --make-and-model 'Lexmark' -m
