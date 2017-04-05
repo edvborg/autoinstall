@@ -11,10 +11,15 @@ fi
 
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
+# clean possible old installationsfiles
+apt-get -y purge cque-de
+rm -R /opt/cel
+
+# install package cque-de
 dpkg -i $SOURCE_PATH/CQue_v3.0.4_Linux_64_DE.deb
 
 # Find Printer with:
-# lpinfo --make-and-model 'Lexmark' -m
+# lpinfo --make-and-model 'Lexmark' -m or lpinfo --make-and-model -m | grep Lexmark
 
 # -E		Enables the destination and accepts jobs
 # -p		Specifies a PostScript Printer Description file to use with the printer.
@@ -29,8 +34,13 @@ lpadmin -E -p securePrint_sw -v lpd://uniflow01/securePrint_sw -m 'lsb/usr/cel/c
 
 # Install Queue for Color
 lpadmin -E -p securePrint_color -v lpd://uniflow01/securePrint_color -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Sichere Druckverbindung UNIFLOW color" -E
+
 # set Standard to Color for Queue Color
 lpoptions -p securePrint_color -o ColourModel=Colour
+
+# set Standard to SW for Queue sw
+lpoptions -p securePrint_sw -o ColourModel=Grayscale
+
 # set Standard Print-Queue
 lpadmin -d securePrint_sw
 
