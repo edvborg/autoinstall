@@ -7,13 +7,15 @@ export DEBIAN_FRONTEND=noninteractive
 
 ## Secureshell - Server
 ## Midnight - Commander
+## HTop Konsole Systemmonitor
+## Tree Konsole Filetree Viewer
 ## git - Version Control
 ## add exfat - filesystem
 ## zip
 ## inotiy-tools for pdf-spooler monitor for virtual windows
 ## Java Plugin for Firefox
 ## Additional Chromium - Browser
-apt-get -y install openssh-server mc htop git gitk exfat-fuse exfat-utils p7zip p7zip-full inotify-tools icedtea-plugin chromium-browser chromium-browser-l10n
+apt-get -y install openssh-server mc htop tree git gitk exfat-fuse exfat-utils p7zip p7zip-full inotify-tools icedtea-plugin chromium-browser chromium-browser-l10n
 
 
 ## Microsoft - Corefonts (Arial, Times, ...)
