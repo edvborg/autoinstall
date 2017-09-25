@@ -1,2 +1,2 @@
-Install secial Packages like:
+Install special Packages like:
 MuseScore 2
