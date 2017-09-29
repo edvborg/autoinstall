@@ -67,9 +67,10 @@ class App():
 
     def __fillLayout(self): 
         whoami = subprocess.Popen(['whoami'], stdout=subprocess.PIPE)
-        ## 0->stdout 1->stderr
-        ## [0:-1] removes \n at the end of the string
-        username = whoami.communicate()[0][0:-1]
+        ## [0] -> stdout [1] -> stderr
+        ## [0][0:-1] removes \n at the end of the string
+        ## str(..., 'utf-8) needed to convert to UTF-8 String
+        username = str(whoami.communicate()[0][0:-1], 'utf-8')
 
         if username != "user":
             self.userName.insert(tk.INSERT,username)
@@ -77,6 +78,7 @@ class App():
         else:
             self.userName.focus_set()
    
+
     def change_password(self):
         self.errorMessage.delete('1.0', tk.END)
         if self.newPassword.get() != self.retypedNewPassword.get():
