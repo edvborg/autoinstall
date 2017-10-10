@@ -41,6 +41,12 @@ lpoptions -p securePrint_color -o ColourModel=Colour
 # set Standard to SW for Queue sw
 lpoptions -p securePrint_sw -o ColourModel=Grayscale
 
+# remove Duplex as Default for Queue sw
+lpoptions -p securePrint_sw -o Duplex=None
+
+# remove Duplex as Default for Queue Color
+lpoptions -p securePrint_color -o Duplex=None
+
 # set Standard Print-Queue
 lpadmin -d securePrint_sw
 
