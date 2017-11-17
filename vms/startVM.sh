@@ -85,7 +85,7 @@ echo "Manage Directorys"
 echo "Save original .VirtualBox Directory, if exists and .VirtualBox.$USER does not exist"
 if [ -d $HOME/.config/VirtualBox ] && [ ! -d $HOME/.VirtualBox.$USER ];
 then
-	mv $HOME/.config/VirtualBox $HOME/.VirtualBox.$USER
+	mv $HOME/.config/VirtualBox $HOME/.VirtualBox.$USER/
 fi
 
 echo "Create Machine Work Directory"
@@ -261,7 +261,7 @@ rm -R $MACHINE_WORK_DIR
 echo "Restore original .config/VirtualBox Directory if exists."
 if [ -d $HOME/.VirtualBox.$USER ];
 then
-	mv $HOME/.VirtualBox.$USER $HOME/.config/VirtualBox
+	mv $HOME/.VirtualBox.$USER $HOME/.config/VirtualBox/
 fi
 
 # kill running inotify

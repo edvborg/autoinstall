@@ -6,8 +6,8 @@
 export DEBIAN_FRONTEND=noninteractive
 
 ## C++ - Programming - Stuff:	build-essential
-## Editors:						jedit geany kate vim
-## Python - Stuff:				tk Tk - framework
+## Editors:			jedit geany kate vim
+## Python - Stuff:		tk Tk - framework
 apt-get -y install build-essential jedit geany kate vim python3-tk
 
 ## Java - Programming Stuff
