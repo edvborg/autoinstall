@@ -143,6 +143,8 @@ VBoxManage --nologo modifyvm $MACHINE 	--bioslogodisplaytime 1
 # NetworkAdapter
 VBoxManage --nologo modifyvm $MACHINE 	--nictype1 82540EM
 VBoxManage --nologo modifyvm $MACHINE 	--nic1 nat
+# plug in virtuall cable into NetworkAdapter (needed since somwhere 5.0.40 and 5.1.30)
+VBoxManage --nologo modifyvm $MACHINE 	--cableconnected1 on
 #VBoxManage --nologo modifyvm $MACHINE 	--macaddress1 0800276D37F9
 # Set Address space for internal NetworkAdapter 
 VBoxManage --nologo modifyvm $MACHINE   --natnet1 192.168.254.0/24
