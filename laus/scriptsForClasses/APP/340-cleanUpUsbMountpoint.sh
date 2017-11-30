@@ -9,8 +9,8 @@ SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 echo "#!/bin/bash
 
 rmdir /media/*
-" > /usr/local/bin/clean-usb-mountpoint.sh
-chmod -R 755 /usr/local/bin/clean-usb-mountpoint.sh
+" > /usr/local/bin/cleanUsbMountpoint.sh
+chmod -R 755 /usr/local/bin/cleanUsbMountpoint.sh
 
 ## create service file in /lib/systemd/system
 echo "[Unit]
@@ -20,7 +20,7 @@ After=local-fs.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/clean-usb-mountpoint.sh
+ExecStart=/usr/local/bin/cleanUsbMountpoint.sh
 
 [Install]
 WantedBy=multi-user.target
