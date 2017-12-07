@@ -10,4 +10,4 @@ export DEBIAN_FRONTEND=noninteractive
 ## More Settings for Compiz
 ## If missing, German Language Pack
 ## some Multimedia - Codecs
-apt-get -y install ubuntu-desktop compizconfig-settings-manager language-pack-gnome-de firefox-locale-de
+apt-get -y install ubuntu-desktop dconf-editor compizconfig-settings-manager language-pack-gnome-de firefox-locale-de
