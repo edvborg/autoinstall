@@ -12,7 +12,7 @@ chmod 750 /usr/local/bin/$HOOKED_SCRIPT
 # Add Hook $HOOKED_SCRIPT to File /etc/gdm3/PreSession/Default
 echo "
 # Hook to /usr/local/bin/$HOOKED_SCRIPT
-/bin/bash /usr/local/bin/$HOOKED_SCRIPT start &
+/bin/bash /usr/local/bin/$HOOKED_SCRIPT 
 " >> $CONF_DIR/$CONF_FILE
 
 
