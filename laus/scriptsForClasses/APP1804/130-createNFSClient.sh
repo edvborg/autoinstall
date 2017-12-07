@@ -38,4 +38,4 @@ cp  files/auto.shares		/etc/
 cp  files/auto.pupils		/etc/
 cp  files/auto.teachers 	/etc/
 
-service autofs restart
+systemctl restart autofs
