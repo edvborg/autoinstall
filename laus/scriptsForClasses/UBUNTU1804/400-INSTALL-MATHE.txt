@@ -1,0 +1,2 @@
+Install special Packages like:
+MuseScore 2

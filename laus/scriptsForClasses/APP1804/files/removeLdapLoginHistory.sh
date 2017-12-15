@@ -7,7 +7,6 @@ do
 	if ! grep -q $USER /etc/passwd;
 	then
 		rm /var/lib/AccountsService/users/$USER
-		rm -R /var/lib/lightdm-data/$USER
 	fi
 done
 
