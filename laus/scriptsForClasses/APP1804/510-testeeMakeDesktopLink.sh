@@ -1,18 +1,34 @@
 #!/bin/bash
 
-CONF_DIR="/etc/gdm3/PreSession"
-CONF_FILE="Default"
-HOOKED_SCRIPT="makeDesktopLinkForTestees.sh"
+# create 
+# desktop-file : /etc/xdg/autostart/app-makeDesktopLinkForTestees.desktop
+# with link to 
+# shell-script : /usr/local/bin/makeDesktopLinkForTestees.sh
+echo "[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Testee Desktop Links
+Name[de]=Skript zum Erstellen der Desktop Links für Testee Benutzer
+Exec=/usr/local/bin/makeDesktopLinkForTestees.sh
+Terminal=false
+X-GNOME-Autostart-Phase=Applications
+NoDisplay=true
+" >> /etc/xdg/autostart/app-makeDesktopLinkForTestees.desktop
 
+# create
+# shell script : /usr/local/bin/makeDesktopLinkForTestees.sh
+# ATTENTION ' instead " because $USER shall NOT be interpreted
+echo '#!/bin/bash
 
-# Copy File with DISABLE-ENABLE Code to /usr/local/sbin
-cp  files/$HOOKED_SCRIPT /usr/local/bin/
-chmod 750 /usr/local/bin/$HOOKED_SCRIPT
+if [[ $USER == testee* ]];
+then
+	ln -s /home/shares/schueler/Testees/Abgabe_$USER $HOME/Schreibtisch/Abgabe_$USER
+	
+	ln -s /home/shares/schueler/Testees/Abgabe_$USER $HOME/Abgabe_$USER
+	
+	ln -s /home/shares/schueler/Testees/Vorlagen/ $HOME/Schreibtisch/Vorlagen
+fi
+' >> /usr/local/bin/makeDesktopLinkForTestees.sh
 
-# Add Hook $HOOKED_SCRIPT to File /etc/gdm3/PreSession/Default
-echo "
-# Hook to /usr/local/bin/$HOOKED_SCRIPT
-/bin/bash /usr/local/bin/$HOOKED_SCRIPT 
-" >> $CONF_DIR/$CONF_FILE
-
+chmod a+x /usr/local/bin/makeDesktopLinkForTestees.sh
 
