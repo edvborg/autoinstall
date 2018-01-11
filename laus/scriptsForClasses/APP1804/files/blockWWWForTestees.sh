@@ -9,6 +9,7 @@ then
 		# disable WWW
 		/sbin/iptables -P OUTPUT DROP
 		/sbin/iptables -I OUTPUT -d 10.0.0.0/8 -j ACCEPT 
+		/sbin/iptables -I OUTPUT -d 127.0.0.0/24 -j ACCEPT 
 		;;
 	stop)
 		# enable WWW
