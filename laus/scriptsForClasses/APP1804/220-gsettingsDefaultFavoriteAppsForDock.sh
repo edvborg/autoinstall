@@ -6,7 +6,7 @@ APP_SETTINGS_FILE="90-app-settings.gschema.override"
 ## set favorite apps in dock
 echo "
 [org.gnome.shell]
-favorite-apps = [ 'firefox.desktop', 'chromium-browser.desktop', 'org.gnome.Nautilus.desktop', 'libreoffice-startcenter.desktop', 'geogebra-classic.desktop', 'vlc.desktop', 'gnome-terminal.desktop', 'win7.desktop', 'yelp.desktop' ]
+favorite-apps = [ 'firefox.desktop', 'chromium-browser.desktop', 'org.gnome.Nautilus.desktop', 'libreoffice-writer.desktop', 'geogebra-classic.desktop', 'vlc.desktop', 'MediathekView.desktop', 'gnome-terminal.desktop', 'win7.desktop', 'yelp.desktop' ]
 
 " >> $SCHEMAS_DIR/$APP_SETTINGS_FILE
 
