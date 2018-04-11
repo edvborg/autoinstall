@@ -1,7 +1,9 @@
-optProgs		-fstype=nfs4	nfs01:/optProgs
-
-programmes		-fstype=nfs4	nfs01:/programmes
-
-lehrmaterial	-fstype=nfs4	nfs02:/lehrmaterial
+lehrmaterial		-fstype=nfs4	nfs02:/lehrmaterial
 
 schueler		-fstype=nfs4	nfs03:/schueler
+
+optProgs		-fstype=nfs4	nfs04:/optProgs
+
+programmes		-fstype=nfs4	nfs04:/programmes
+
+
