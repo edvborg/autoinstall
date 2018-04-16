@@ -11,7 +11,7 @@ fi
 
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
-dpkg -i $SOURCE_PATH/CQue_v3.0.4_Linux_64_DE.deb
+dpkg -i $SOURCE_PATH/CQue_v3.0.5_Linux_64_DE.deb
 
 # Find Printer with:
 # lpinfo --make-and-model 'Lexmark' -m

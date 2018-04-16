@@ -15,8 +15,10 @@ SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 apt-get -y purge cque-de
 rm -R /opt/cel
 
-# install package cque-de
-dpkg -i $SOURCE_PATH/CQue_v3.0.4_Linux_64_DE.deb
+# install package cque-de for Ubuntu 16.04
+# dpkg -i $SOURCE_PATH/CQue_v3.0.4_Linux_64_DE.deb
+# install package cque-de for Ubuntu 18.04
+dpkg -i $SOURCE_PATH/CQue_v3.0.5_Linux_64_DE.deb
 
 # Find Printer with:
 # lpinfo --make-and-model 'Lexmark' -m or lpinfo --make-and-model -m | grep Lexmark
