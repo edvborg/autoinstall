@@ -6,8 +6,8 @@
 export DEBIAN_FRONTEND=noninteractive
 
 ## Full Ubuntu - Desktop
-## install feature to open terminal from nautilus filemanager
-## More Settings for Compiz
+## dconf editor to customize hidden desktop options
+## More Settings for Compiz Graphic Manager
 ## If missing, German Language Pack
-## some Multimedia - Codecs
+
 apt-get -y install ubuntu-desktop dconf-editor compizconfig-settings-manager language-pack-gnome-de firefox-locale-de
