@@ -12,4 +12,4 @@ export DEBIAN_FRONTEND=noninteractive
 ## wbar:        panel to contol openbox
 ## firefox:     browser
 
-apt-get -y install mc xorg openbox python wbar wbar-config firefox firefox-locale-de
+apt-get -y install mc xorg openbox python firefox firefox-locale-de
