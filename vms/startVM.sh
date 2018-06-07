@@ -102,6 +102,9 @@ echo "Directory for: " $SCHUELER_DIR
 LEHRMATERIAL_DIR="/home/shares/lehrmaterial"
 echo "Directory for: " $LEHRMATERIAL_DIR
 
+OPTPROGS_DIR="/home/shares/optProgs"
+echo "Directory for: " $OPTPROGS_DIR
+
 PROGRAMMES_DIR="/home/shares/programmes"
 echo "Directory for: " $PROGRAMMES_DIR
 
@@ -191,6 +194,13 @@ then
 	echo "Create shared Folder for Directory: "$LEHRMATERIAL_DIR
 	VBoxManage sharedfolder add $MACHINE --name lehrmaterial --hostpath $LEHRMATERIAL_DIR
 fi
+
+if [ -d $OPTPROGS_DIR ];
+then
+	echo "Create shared Folder for Directory: "$OPTPROGS_DIR
+	VBoxManage sharedfolder add $MACHINE --name optProgs --hostpath $OPTPROGS_DIR
+fi
+
 if [ -d $PROGRAMMES_DIR ];
 then
 	echo "Create shared Folder for Directory: "$PROGRAMMES_DIR
@@ -206,7 +216,7 @@ fi
 if [ $USB = "usbon" ];
 then
 	echo "Create shared Folder for USB"
-	VBoxManage sharedfolder add $MACHINE --name USB-Storage --hostpath /media --automount
+	VBoxManage sharedfolder add $MACHINE --name USB-Storage --hostpath /media 
 fi
 
 echo "Create shared Folder for Home Directory: "$HOME
