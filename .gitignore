@@ -1,5 +1,5 @@
 laus/hostsToClasses
-vms/Windows.vdi
+*.vdi
 vms.old
 vms.old.*
 xBigFiles

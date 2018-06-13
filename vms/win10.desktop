@@ -1,14 +1,14 @@
 [Desktop Entry]
 Categories=Utility;Application;
-Comment[de]=Start Windows 7 in a Virtual Machine
-Comment=Start Windows 7 in a Virtual Machine
-Exec=/opt/vms/startVM.sh /opt/vms/win7.vdi --ioapic off
+Comment[de]=Startet Windows 10 in einer Virtuellen Maschine
+Comment=Start Windows 10 in a Virtual Machine
+Exec=/opt/vms/startVM.sh /opt/vms/win10.vdi --ioapic on
 GenericName[de]=
 GenericName=
-Icon=/opt/vms/win7.png
+Icon=/opt/vms/win10.png
 MimeType=
-Name[de]=Windows 7
-Name=Windows 7
+Name[de]=Windows 10
+Name=Windows 10
 Path=
 StartupNotify=true
 Terminal=true
@@ -19,3 +19,4 @@ X-DBUS-ServiceName=
 X-DBUS-StartupType=
 X-KDE-SubstituteUID=false
 X-KDE-Username=
+

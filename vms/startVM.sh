@@ -4,22 +4,25 @@
 # Idee from VlizedLab http://www.vlizedlab.at/
 # Changes by Reinhard Fink
 # call Script with Parameters
-# 1:	Name of Virtual Machine Harddisk File without Ending .vdi
-#		Standard: Windows
-# 2:	OS - Type: Windows7, OpenSUSE, Ubuntu, ...
-#		Standard: Windows7
-# 3:	USB: usbon/usboff
-#		Standard usbon
+#
+# 1:	Path/Filename of Virtual Machine Harddisk File with Ending .vdi
+#
+# 2:	VBoxManage Option1 Option1-Parameter
+#	VBoxManage Option1 Option1-Parameter Option2 Option2-Parameter
 #
 # Examples: 
-#	startVM  			starts Virtualmachine Windows.vdi with OS-Type Windows7 an USB on
-#	startVM	ubu Ubuntu usboff	starts Virtualmachine ubu.vdi with OS-Type Ubuntu an USB off
-#	startVM	ubu Ubuntu 		starts Virtualmachine ubu.vdi with OS-Type Ubuntu an USB on
+#	startVM.sh /opt/vms/win7.vdi			  
+#   	starts Virtualmachine win.vdi in directory /opt/vms
 #
-#
-#
+#	startVM	/opt/vms/win7.vdi --acpi off 
+#   	starts Virtualmachine win7.vdi in directory /opt/vms and 
+#   	turns acpi off. 
+#	Script will call VBoxManage modifyvm $MACHINE --acpi off 
+#	
 # Create Variables and Directories ######################################################
-#
+
+
+## Helper function for inotify - pdf - printer - spooler
 function killInotifyWait()
 {
 	# check, if an inotifywait process is running and kill it
@@ -30,65 +33,31 @@ function killInotifyWait()
 	fi
 }
 
-echo "Set Variables"
-if [ -z $1 ];
-then
-	MACHINE=Windows
-else
-	MACHINE=$1
-fi
-echo "Machinename: " $MACHINE
+## Set variables
+echo "Set variables"
 
-if [ -z $2 ];
-then
-	OS_TYPE=Windows7
-else
-	OS_TYPE=$2
-fi
-echo "OS Type: " $OS_TYPE
+MACHINE_PATH_AND_FILE=$1
 
-if [ ! -z $3 ] && [ $3 = "usboff" ];
-then
-	USB=usboff
-else
-	USB=usbon
-fi
-echo "USB: " $USB
+MACHINE_PATH=$(dirname $MACHINE_PATH_AND_FILE)
 
-MACHINE_STORAGE_DIR=/opt/vms
-echo "Readonly Storage Directory for VMs: " $MACHINE_STORAGE_DIR
+MACHINE_FILE=$(basename $MACHINE_PATH_AND_FILE)
 
-if [ ! -f $MACHINE_STORAGE_DIR/$MACHINE.vdi ];
+MACHINE_NAME=${MACHINE_FILE%.vdi}
+
+MACHINE_WORK_DIR=/tmp/${USER}_vms
+
+echo "Looking for $MACHINE_FILE in $MACHINE_PATH to create machine $MACHINE_NAME"
+echo "Working directory for current running VM:  $MACHINE_WORK_DIR"
+
+if [ ! -f $MACHINE_PATH_AND_FILE ];
 then
-	echo "File "$MACHINE_STORAGE_DIR/$MACHINE" does not exist"
+	echo "File "$MACHINE_PATH_AND_FILE" does not exist"
 	echo "--- AUTOMATIK UPDATE TRY LATER! ---"
 	echo "--- OR WRONG FILENAME! ---"
 	exit
 fi
 
-MACHINE_WORK_DIR=/tmp/${USER}_vms
-echo "Working Directory for Current Running VM: " $MACHINE_WORK_DIR
-
-# Set Ramsize for Host
-HOST_RAM=$((2048 + 0))
-# Get available Ramsize from Host
-VM_RAM=$(cat /proc/meminfo | grep MemTotal: | awk -F' ' '{ print $2 }' )
-# Ramsize im MB
-VM_RAM=$(($VM_RAM / 1024))
-# Calculate VM_RAM
-VM_RAM=$(($VM_RAM - $HOST_RAM))
-#VM_RAM=1024
-echo "Ram Size for VM: " $VM_RAM
-
-
-echo "Manage Directorys"
-echo "Save original .VirtualBox Directory, if exists and .VirtualBox.$USER does not exist"
-if [ -d $HOME/.config/VirtualBox ] && [ ! -d $HOME/.VirtualBox.$USER ];
-then
-	mv $HOME/.config/VirtualBox $HOME/.VirtualBox.$USER/
-fi
-
-echo "Create Machine Work Directory"
+echo "Clean & create machine work directory"
 if [ -d $MACHINE_WORK_DIR ];
 then
 	rm -R $MACHINE_WORK_DIR
@@ -111,74 +80,97 @@ echo "Directory for: " $PROGRAMMES_DIR
 CONFIG_WINONTOP_DIR=$MACHINE_STORAGE_DIR"/configwinontop"
 echo "Config Directory for WinOnTop: " $CONFIG_WINONTOP_DIR
 
-
 # Directories for PDF - Spooler
 DIRECTORY_TO_MONITOR="$HOME/pdf-spooler"
-echo "Spooler Directory for PDF-Printer >>Printer_sw<< printing from  WinOnTop: " $DIRECTORY_TO_MONITOR
+echo "Spooler directory for PDF-printer >>Printer_sw<< printing from  WinOnTop: " $DIRECTORY_TO_MONITOR
 
 DIRECTORY_TO_MONITOR_FOR_COLOR="$DIRECTORY_TO_MONITOR/color"
-echo "Spooler Directory for PDF-Printer >>Printer_color<< printing from  WinOnTop: " $DIRECTORY_TO_MONITOR_FOR_COLOR
-
+echo "Spooler directory for PDF-printer >>Printer_color<< printing from  WinOnTop: " $DIRECTORY_TO_MONITOR_FOR_COLOR
 
 # check, if Color-Printer available
 # COLOR_PRINTER_NAME=Printer-Color
 COLOR_PRINTER_NAME=$(lpstat -p | grep color | awk '{ print $2 }')
-echo "Color Printer: " $COLOR_PRINTER_NAME
+echo "Color printer: " $COLOR_PRINTER_NAME
 
-# Create Virtual Machine ################################################################
+# Manage Virtualbox Configuration Directorys
+echo "Manage Virtualbox configuration directorys"
+echo "Save original .VirtualBox directory, if exists and .VirtualBox.$USER does not exist"
+if [ -d $HOME/.config/VirtualBox ] && [ ! -d $HOME/.VirtualBox.$USER ];
+then
+	mv $HOME/.config/VirtualBox $HOME/.VirtualBox.$USER/
+fi
+
+# Set ramsize for host
+HOST_RAM=$((2048 + 0))
+# Get available ramsize from host
+VM_RAM=$(cat /proc/meminfo | grep MemTotal: | awk -F' ' '{ print $2 }' )
+# Ramsize im MB
+VM_RAM=$(($VM_RAM / 1024))
+# Calculate VM_RAM
+VM_RAM=$(($VM_RAM - $HOST_RAM))
+#VM_RAM=1024
+echo "Ram Size for VM: " $VM_RAM
+
+# Create virtual machine ################################################################
 #
-echo "Create Virtual Machine"
-VBoxManage --nologo createvm --name $MACHINE --register --basefolder $MACHINE_WORK_DIR
+echo "Create virtual machine"
+VBoxManage --nologo createvm --name $MACHINE_NAME --register --basefolder $MACHINE_WORK_DIR
 # OS
-VBoxManage --nologo modifyvm $MACHINE 	--ostype $OS_TYPE
+#VBoxManage --nologo modifyvm $MACHINE_NAME --ostype $OS_TYPE
 # CPU + GPU
-VBoxManage --nologo modifyvm $MACHINE 	--memory $VM_RAM
-VBoxManage --nologo modifyvm $MACHINE 	--vram 128
-VBoxManage --nologo modifyvm $MACHINE 	--acpi on
-# ioacoi off IMPORTANT: otherwise Windows wants to reinstall CPU - Driver
-VBoxManage --nologo modifyvm $MACHINE 	--ioapic off
-VBoxManage --nologo modifyvm $MACHINE 	--hwvirtex on
-VBoxManage --nologo modifyvm $MACHINE 	--pae off
+VBoxManage --nologo modifyvm $MACHINE_NAME --memory $VM_RAM
+VBoxManage --nologo modifyvm $MACHINE_NAME --vram 128
+VBoxManage --nologo modifyvm $MACHINE_NAME --acpi on
+# ioacoi off IMPORTANT: otherwise Windows 7 wants to reinstall CPU - Driver
+VBoxManage --nologo modifyvm $MACHINE_NAME --ioapic off
+VBoxManage --nologo modifyvm $MACHINE_NAME --hwvirtex on
+VBoxManage --nologo modifyvm $MACHINE_NAME --pae off
 # BIOS
-VBoxManage --nologo modifyvm $MACHINE 	--bioslogofadein off
-VBoxManage --nologo modifyvm $MACHINE 	--bioslogofadeout off
-VBoxManage --nologo modifyvm $MACHINE 	--bioslogodisplaytime 1
+VBoxManage --nologo modifyvm $MACHINE_NAME --bioslogofadein off
+VBoxManage --nologo modifyvm $MACHINE_NAME --bioslogofadeout off
+VBoxManage --nologo modifyvm $MACHINE_NAME --bioslogodisplaytime 1
 # NetworkAdapter
-VBoxManage --nologo modifyvm $MACHINE 	--nictype1 82540EM
-VBoxManage --nologo modifyvm $MACHINE 	--nic1 nat
-# plug in virtuall cable into NetworkAdapter (needed since somwhere 5.0.40 and 5.1.30)
-VBoxManage --nologo modifyvm $MACHINE 	--cableconnected1 on
-#VBoxManage --nologo modifyvm $MACHINE 	--macaddress1 0800276D37F9
-# Set Address space for internal NetworkAdapter 
-VBoxManage --nologo modifyvm $MACHINE   --natnet1 192.168.254.0/24
+VBoxManage --nologo modifyvm $MACHINE_NAME --nictype1 82540EM
+VBoxManage --nologo modifyvm $MACHINE_NAME --nic1 nat
+# plug in virtuall cable into networkAdapter (needed since somwhere 5.0.40 and 5.1.30)
+VBoxManage --nologo modifyvm $MACHINE_NAME --cableconnected1 on
+#VBoxManage --nologo modifyvm $MACHINE_NAME --macaddress1 0800276D37F9
+# Set address space for internal networkAdapter 
+VBoxManage --nologo modifyvm $MACHINE_NAME --natnet1 192.168.254.0/24
 # AudioAdapter
-VBoxManage --nologo modifyvm $MACHINE 	--audio alsa --audiocontroller hda
-
-# USB solved with SharedFolder
-#VBoxManage --nologo modifyvm $MACHINE 	--usb on
-#VBoxManage --nologo modifyvm $MACHINE 	--usbehci on
-
+VBoxManage --nologo modifyvm $MACHINE_NAME --audio alsa --audiocontroller hda
 # --boot<1-4> none|floppy|dvd|disk|net
-VBoxManage --nologo modifyvm $MACHINE 	--boot1 disk
-
-echo "Create Harddisk Controller for Virtual Machine"
+VBoxManage --nologo modifyvm $MACHINE_NAME --boot1 disk
+# Create staorage adapters
+echo "Create harddisk controller for virtual machine"
 # IDE
-VBoxManage --nologo storagectl $MACHINE --name IDE-Controller-$MACHINE --add ide --controller PIIX4 --hostiocache on
+VBoxManage --nologo storagectl $MACHINE_NAME --name IDE-Controller-$MACHINE_NAME --add ide --controller PIIX4 --hostiocache on
 # SATA
-VBoxManage --nologo storagectl $MACHINE --name SATA-Controller-$MACHINE --add sata --controller IntelAHCI --portcount 1 --hostiocache off
+VBoxManage --nologo storagectl $MACHINE_NAME --name SATA-Controller-$MACHINE_NAME --add sata --controller IntelAHCI --portcount 1 --hostiocache off
 
-echo "Link Machine VDI from Storage Directory to Work Directory"
-ln -s $MACHINE_STORAGE_DIR/$MACHINE.vdi $MACHINE_WORK_DIR/$MACHINE/$MACHINE.vdi
+#echo "Link Machine VDI from Storage Directory to Work Directory"
+#ln -s $MACHINE_STORAGE_DIR/$MACHINE.vdi $MACHINE_WORK_DIR/$MACHINE/$MACHINE.vdi
 
 echo "Attach Harddisk to Virtual Machine"
-VBoxManage --nologo storageattach $MACHINE --storagectl SATA-Controller-$MACHINE --port 0 --device 0 --type hdd --medium $MACHINE_WORK_DIR/$MACHINE/$MACHINE.vdi --mtype immutable
-
-
+#VBoxManage --nologo storageattach $MACHINE_NAME --storagectl SATA-Controller-$MACHINE_NAME --port 0 --device 0 --type hdd --medium $MACHINE_WORK_DIR/$MACHINE_NAME/$MACHINE_FILE --mtype immutable
+VBoxManage --nologo storageattach $MACHINE_NAME --storagectl SATA-Controller-$MACHINE_NAME --port 0 --device 0 --type hdd --medium $MACHINE_PATH_AND_FILE --mtype immutable
 echo "Set Display Settings/Supress Notifications"
 VBoxManage setextradata global GUI/SuppressMessages confirmGoingFullscreen,confirmInputCapture,remindAboutAutoCapture,remindAboutWrongColorDepth,remindAboutMouseIntegration
 
-VBoxManage setextradata $MACHINE GUI/Fullscreen on
-VBoxManage setextradata $MACHINE GUI/ShowMiniToolBar no
+VBoxManage setextradata $MACHINE_NAME GUI/Fullscreen on
+VBoxManage setextradata $MACHINE_NAME GUI/ShowMiniToolBar no
+
+# Apply command line options from script to VBoxManage  
+if [ ! -z $2 ];
+then 
+	echo "Apply command line options NR 1 from script to VBoxManage "
+	VBoxManage --nologo modifyvm $MACHINE_NAME $2 $3
+fi
+if [ ! -z $4 ];
+then 
+	echo "Apply command line options NR 2 from script to VBoxManage "
+	VBoxManage --nologo modifyvm $MACHINE_NAME $4 $5
+fi
 
 
 # Create Shared Folder
@@ -187,40 +179,36 @@ echo "Createing shared Folders"
 if [ -d $SCHUELER_DIR ];
 then
 	echo "Create shared Folder for Directory: "$SCHUELER_DIR
-	VBoxManage sharedfolder add $MACHINE --name schueler --hostpath $SCHUELER_DIR
+	VBoxManage sharedfolder add $MACHINE_NAME --name schueler --hostpath $SCHUELER_DIR
 fi
 if [ -d $LEHRMATERIAL_DIR ];
 then
 	echo "Create shared Folder for Directory: "$LEHRMATERIAL_DIR
-	VBoxManage sharedfolder add $MACHINE --name lehrmaterial --hostpath $LEHRMATERIAL_DIR
+	VBoxManage sharedfolder add $MACHINE_NAME --name lehrmaterial --hostpath $LEHRMATERIAL_DIR
 fi
-
-if [ -d $OPTPROGS_DIR ];
+if [ -d $OPT_PROG_DIR ];
 then
 	echo "Create shared Folder for Directory: "$OPTPROGS_DIR
-	VBoxManage sharedfolder add $MACHINE --name optProgs --hostpath $OPTPROGS_DIR
+	VBoxManage sharedfolder add $MACHINE_NAME --name optProgs --hostpath $OPTPROGS_DIR
 fi
 
 if [ -d $PROGRAMMES_DIR ];
 then
 	echo "Create shared Folder for Directory: "$PROGRAMMES_DIR
-	VBoxManage sharedfolder add $MACHINE --name programmes --hostpath $PROGRAMMES_DIR
+	VBoxManage sharedfolder add $MACHINE_NAME --name programmes --hostpath $PROGRAMMES_DIR
 fi
 
 if [ -d $CONFIG_WINONTOP_DIR ];
 then
 	echo "Create shared Folder Configuration Directory: "$CONFIG_WINONTOP_DIR
-	VBoxManage --nologo sharedfolder add $MACHINE --name configwinontop --hostpath $CONFIG_WINONTOP_DIR
+	VBoxManage --nologo sharedfolder add $MACHINE_NAME --name configwinontop --hostpath $CONFIG_WINONTOP_DIR
 fi
 
-if [ $USB = "usbon" ];
-then
-	echo "Create shared Folder for USB"
-	VBoxManage sharedfolder add $MACHINE --name USB-Storage --hostpath /media 
-fi
+echo "Create shared folder for USB"
+VBoxManage sharedfolder add $MACHINE_NAME --name USB-Storage --hostpath /media --automount
 
-echo "Create shared Folder for Home Directory: "$HOME
-VBoxManage --nologo sharedfolder add $MACHINE --name myHome --hostpath $HOME
+echo "Create shared folder for home directory: "$HOME
+VBoxManage --nologo sharedfolder add $MACHINE_NAME --name myHome --hostpath $HOME
 
 
 # Create PDF - Spooler Monitor ################################################################
@@ -236,6 +224,7 @@ killInotifyWait
 
 # start monitoring for $DIRECTORY_TO_MONITOR in background (see &)
 # and sent files to standard printer
+
 inotifywait -e close_write $DIRECTORY_TO_MONITOR -m -r --format "%w%f" | \
 while read PATH_AND_FILE; 
 do 
@@ -258,15 +247,15 @@ done &
 
 # Starts VM ################################################################
 #
-echo "Start Virtual Machine"
-# Starts VM and return to this Script, when VM shuts down
-#VBoxManage startvm $MACHINE
-VirtualBox --startvm $MACHINE --fullscreen
+echo "Start virtual machine"
+# Starts VM and return to this script, when VM shuts down
+#VBoxManage startvm $MACHINE_NAME
+VirtualBox --startvm $MACHINE_NAME --fullscreen
 
-# Restore Directories/Kill PDF - Spooler Monitor ##############################################
+# Restore drectories/kill PDF - spooler monitor ##############################################
 #
-echo "Restore all Virtualbox Config - Directories"
-echo "Wait for 2 seconds to shutdown virtual machine"
+echo "Restore all Virtualbox config - directories"
+echo "Wait for 5 seconds to shutdown virtual machine"
 sleep 5
 rm -R $HOME/.config/VirtualBox
 rm -R $MACHINE_WORK_DIR

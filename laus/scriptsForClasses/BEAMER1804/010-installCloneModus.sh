@@ -9,7 +9,7 @@ echo "[Desktop Entry]
 Version=1.0
 Type=Application
 Name=APP Clone Desktop Screens
-Name[de]=Skript zum Klonen der Desktop bei Beamerbenutzung
+Name[de]=Skript zum Klonen des Desktops bei Beamerbenutzung
 Exec=/usr/local/bin/clone
 Terminal=false
 NoDisplay=true
@@ -26,7 +26,7 @@ echo "[Desktop Entry]
 Version=1.0
 Type=Application
 Name=APP Clone Desktop Screens
-Name[de]=Skript zum Klonen der Desktop bei Beamerbenutzung
+Name[de]=Skript zum Klonen des Desktops bei Beamerbenutzung
 Exec=/usr/local/bin/clone
 Terminal=false
 X-GNOME-Autostart-Phase=Applications
