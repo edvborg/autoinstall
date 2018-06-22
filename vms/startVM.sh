@@ -138,10 +138,17 @@ VBoxManage --nologo modifyvm $MACHINE_NAME --cableconnected1 on
 # Set address space for internal networkAdapter 
 VBoxManage --nologo modifyvm $MACHINE_NAME --natnet1 192.168.254.0/24
 # AudioAdapter
-VBoxManage --nologo modifyvm $MACHINE_NAME --audio alsa --audiocontroller hda
+# "alsa" was working perfect in Ubuntu 16.04, but has bad sound in 18.04
+# so switch to "pulse", which works on 16.04 and 18.04
+# VBoxManage --nologo modifyvm $MACHINE_NAME --audio alsa --audiocontroller hda
+VBoxManage --nologo modifyvm $MACHINE_NAME --audio pulse --audiocontroller hda
+VBoxManage --nologo modifyvm $MACHINE_NAME --audiocontroller hda
+# switch audio in/out on (needed since somwhere 5.2.??)
+VBoxManage --nologo modifyvm $MACHINE_NAME --audioin on
+VBoxManage --nologo modifyvm $MACHINE_NAME --audioout on
 # --boot<1-4> none|floppy|dvd|disk|net
 VBoxManage --nologo modifyvm $MACHINE_NAME --boot1 disk
-# Create staorage adapters
+# Create storage adapters
 echo "Create harddisk controller for virtual machine"
 # IDE
 VBoxManage --nologo storagectl $MACHINE_NAME --name IDE-Controller-$MACHINE_NAME --add ide --controller PIIX4 --hostiocache on
@@ -205,7 +212,7 @@ then
 fi
 
 echo "Create shared folder for USB"
-VBoxManage sharedfolder add $MACHINE_NAME --name USB-Storage --hostpath /media --automount
+VBoxManage sharedfolder add $MACHINE_NAME --name USB-Storage --hostpath /media 
 
 echo "Create shared folder for home directory: "$HOME
 VBoxManage --nologo sharedfolder add $MACHINE_NAME --name myHome --hostpath $HOME
