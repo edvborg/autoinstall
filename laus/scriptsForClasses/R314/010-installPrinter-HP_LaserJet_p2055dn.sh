@@ -7,9 +7,9 @@
 ## and should be named after printer modell 
 ## example: installPrinter_Brother_HL-7050.sh
 
-PRINTER_NAME="Raum-002-Printer"
-PRINTER_LOCATION="Drucker im Raum 002"
-PRINTER_DNS_NAME="r002pr01"
+PRINTER_NAME="Raum-314-Printer"
+PRINTER_LOCATION="Drucker im Raum 314"
+PRINTER_DNS_NAME="r314pr01"
 
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
