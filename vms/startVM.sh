@@ -151,7 +151,7 @@ VBoxManage --nologo modifyvm $MACHINE_NAME --boot1 disk
 # Create storage adapters
 echo "Create harddisk controller for virtual machine"
 # IDE
-VBoxManage --nologo storagectl $MACHINE_NAME --name IDE-Controller-$MACHINE_NAME --add ide --controller PIIX4 --hostiocache on
+#VBoxManage --nologo storagectl $MACHINE_NAME --name IDE-Controller-$MACHINE_NAME --add ide --controller PIIX4 --hostiocache on
 # SATA
 VBoxManage --nologo storagectl $MACHINE_NAME --name SATA-Controller-$MACHINE_NAME --add sata --controller IntelAHCI --portcount 1 --hostiocache off
 

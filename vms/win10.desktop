@@ -2,7 +2,7 @@
 Categories=Utility;Application;
 Comment[de]=Startet Windows 10 in einer Virtuellen Maschine
 Comment=Start Windows 10 in a Virtual Machine
-Exec=/opt/vms/startVM.sh /opt/vms/win10.vdi --ioapic on
+Exec=/opt/vms/startVM.sh /opt/vms/win10.vdi --ioapic on --cpus 2
 GenericName[de]=
 GenericName=
 Icon=/opt/vms/win10.png
