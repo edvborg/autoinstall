@@ -15,5 +15,8 @@ dpkg-reconfigure libdvd-pkg
 
 ## VLC - Player
 ## Audacity
-apt-get -y install vlc audacity
+## Open Shot Video Editor
+apt-get -y install vlc audacity openshot
+
+
 

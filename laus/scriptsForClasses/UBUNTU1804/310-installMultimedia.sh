@@ -17,5 +17,6 @@ dpkg-reconfigure libdvd-pkg
 ## Audacity
 ## lame
 ## CD Ripping sound-juicer
-apt-get -y install vlc audacity lame sound-juicer
+## Open Shot Video Editor
+apt-get -y install vlc audacity lame sound-juicer openshot
 
