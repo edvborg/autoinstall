@@ -16,7 +16,7 @@ apt-get -y purge cque-de
 rm -R /opt/cel
 
 # install package cque-de
-dpkg -i $SOURCE_PATH/CQue_v3.0.4_Linux_64_DE.deb
+dpkg -i $SOURCE_PATH/CQue_v4.0.0_Linux_64_DE.deb
 
 # Find Printer with:
 # lpinfo --make-and-model 'Lexmark' -m or lpinfo --make-and-model -m | grep Lexmark
