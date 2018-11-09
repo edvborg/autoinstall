@@ -12,6 +12,7 @@ export DEBIAN_FRONTEND=noninteractive
 ## Secureshell - Server
 ## Midnight - Commander
 ## HTop Konsole Systemmonitor
+## gedit-plugins -> Plugins for gedit: git, terminal, show spaces, ...
 ## GNOME System Monitor
 ## libcanberra-gtk-module -> GTK Widgets to sounds
 ## Tree Konsole Filetree Viewer
@@ -22,7 +23,7 @@ export DEBIAN_FRONTEND=noninteractive
 ## Java Plugin for Firefox
 ## Additional Chromium - Browser
 ## Java FX 
-apt-get -y install net-tools openssh-server mc htop gnome-system-monitor libcanberra-gtk-module tree git gitk exfat-fuse exfat-utils p7zip p7zip-full inotify-tools icedtea-plugin chromium-browser chromium-browser-l10n openjfx
+apt-get -y install net-tools openssh-server mc htop gedit-plugins gnome-system-monitor libcanberra-gtk-module tree git gitk exfat-fuse exfat-utils p7zip p7zip-full inotify-tools icedtea-plugin chromium-browser chromium-browser-l10n openjfx
 
 
 ## Microsoft - Corefonts (Arial, Times, ...)
