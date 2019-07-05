@@ -14,7 +14,7 @@ PRINTER_DNS_NAME="r002pr01"
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
-PRINTER_DRIVER="drv:///hpcups.drv/hp-laserjet_p2055dn-pcl3.ppd"
+PRINTER_DRIVER="foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Lexmark-T652-Postscript.ppd"
 
 
 ## check if old /etc/cups/client.conf 

@@ -12,5 +12,4 @@ export DEBIAN_FRONTEND=noninteractive
 #  add-apt-repository -y ppa:texlive-backports/ppa
 #  apt-get update
 #fi
-apt-get -y install texmaker texlive texlive-lang-german texlive-latex-extra texlive-latex-recommended
-
+apt-get -y install texmaker texstudio texlive texlive-lang-german texlive-latex-extra texlive-latex-recommended
