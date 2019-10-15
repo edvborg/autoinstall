@@ -4,6 +4,7 @@ vms.old
 vms.old.*
 xBigFiles
 VirtualBox_VMs
+secret*
 *.directory
 *~
 .Trash*
