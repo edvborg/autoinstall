@@ -1,0 +1,96 @@
+﻿
+Printer am AGI
+=================================================================
+1. Eintrag in hostsToClasses
+2. Raumverzeichnis in scriptsForClasses und PRINTERS-Verzeichnis
+2a. Script in Raumverzeichnis
+3. Scripts in scriptsForClasses/PRINTERS)
+3a. installPrinter.sh
+3b. installPrinterModel.sh (modifiziertes Script von Reini)
+=================================================================
+1. Eintrag in hostsToClasses:
+-----------------------------------------------------------------
+r00Xpc01:NETWORKBOX UBUNTU1804 XADMIN R00X
+
+2. Raumverzeichnis in scriptsForClasses und PRINTERS-Verzeichnis:
+-----------------------------------------------------------------
+R00X
+|-- 010-installPrinter.sh
+PRINTERS
+|-- installPrinters.sh
+|-- installPrinterModel.sh
+
+2a. R00X/010-installPrinter.sh:
+-----------------------------------------------------------------
+#!/bin/bash
+../PRINTERS/installPrinter.sh <PrinterName>
+
+3. Scripts in scriptsForClasses/PRINTERS:
+-----------------------------------------------------------------
+3a. PRINTERS/installPrinters.sh
+-----------------------------------------------------------------
+#!/bin/bash
+case $1 in
+<PrinterName> )
+installPrinterModel.sh <PRINTER_NAME> <PRINTER_LOCATION> <PRINTER_DNS_NAME> <PRINTER_DRIVER>
+;;
+# weitere PrinterNamen je nach Bedarf
+# <PrinterName> )
+# installPrinterModel.sh ....
+# ;;
+* )
+esac
+
+3b. PRINTERS/installPrinterModel.sh (modifiziertes Script von Reini):
+-----------------------------------------------------------------
+#!/bin/bash
+# modifiziertes Script von Reini
+### USAGE:
+## installs printer ${PRINTER_NAME}
+## with driver ${PRINTER_DRIVER}
+##
+## and should be named after printer modell 
+## example: installPrinter_Brother_HL-7050.sh
+
+PRINTER_NAME=$1
+PRINTER_LOCATION=$2
+PRINTER_DNS_NAME=$3
+
+## Find Print Driver with:
+## >> lpinfo --make-and-model 'Lexmark' -m
+PRINTER_DRIVER=$4
+
+
+## check if old /etc/cups/client.conf 
+## for redirection to other cups server exists
+if [ -f /etc/cups/client.conf ]
+then
+initctl stop cups
+mv /etc/cups/client.conf /etc/cups/client.conf.tocups01
+initctl start cups
+fi
+
+
+## check if printer ${PRINTER_NAME} already installed
+if [ "$(lpstat -v | grep ${PRINTER_NAME})" != "" ];
+then
+lpadmin -x ${PRINTER_NAME}
+fi
+
+
+## Options in lpadmin declared:
+# -E Enables the destination and accepts jobs
+# -p Specifies a PostScript Printer Description file to use with the printer.
+# -v device-uri
+# -m Sets a standard System V interface script or PPD file for the printer from the model directory 
+# or using one of the driver interfaces
+# -L Provides a textual location of the destination.
+
+# Note the two -E options. The first one (before -p) forces encryption when connecting to the server. 
+# The last one enables the destination and starts accepting jobs.
+
+lpadmin -E -p "${PRINTER_NAME}" -v socket://${PRINTER_DNS_NAME} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION}" -E
+
+# set as Default Printer
+lpadmin -d ${PRINTER_NAME} 
+=================================================================
