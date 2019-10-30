@@ -1,0 +1,4 @@
+600-INSTALL-VARIOUS-PROGRAMS.txt
+
+Programme, die sich nicht in eine
+bestimmte Kategorie einordnen lassen.
