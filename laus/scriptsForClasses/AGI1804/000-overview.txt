@@ -1,0 +1,47 @@
+000: INSTALL-DESKTOP-VARIATION.txt *
+001: defineVariables.sh
+005: basic work (nfs, apt, desktop, user) *
+020
+030
+040
+050
+060
+070
+080
+090
+100: INSTALL-SOFTWARE.txt
+110: 
+115: installCodecs.sh
+120: installLibreOffice.sh
+125: installScreencast.sh
+200: installTextEditors.sh
+210: installHexEditors.sh
+220:
+230: 
+240: 
+300: INSTALL-MUSIC.txt
+310: installMultimediaPlayers.sh
+315: installCD.sh
+325: installVideoEditors.sh
+330: installMusicTools.sh
+400: INSTALL-MATHE.txt
+410: installMathe.sh
+420: installPhysikTools.sh
+430: 
+440: 
+450: 
+460: 
+500: INSTALL-PROGRAMMING-SOFTWARE.txt
+510: 
+520: 
+530: 
+600: INSTALL-VARIOUS-PROGRAMS.txt
+610: installMindmap.sh
+620: installOCR.sh
+700
+710
+800
+810
+900: FINISH-INSTALLATION.txt
+910
+999: reboot after installations
