@@ -9,7 +9,7 @@ apt-get -y install inkscape
 ## Gimp
 add-apt-repository ppa:otto-kesselgulasch/gimp
 
-apt update
+apt-get update
 
-apt -y install gimp
+apt-get -y install gimp
 
