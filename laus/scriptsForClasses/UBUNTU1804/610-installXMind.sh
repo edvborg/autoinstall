@@ -13,7 +13,5 @@
 
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
-apt-get -y install gconf2
-
-dpkg -i $SOURCE_PATH/XMind-ZEN-for-Linux-64bit.deb
+apt-get -y install $SOURCE_PATH/XMind-ZEN-for-Linux-64bit.deb
 
