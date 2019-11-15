@@ -20,10 +20,9 @@ export DEBIAN_FRONTEND=noninteractive
 ## add exfat - filesystem
 ## zip
 ## inotiy-tools for pdf-spooler monitor for virtual windows
-## Java Plugin for Firefox
 ## Additional Chromium - Browser
 ## Java FX 
-apt-get -y install net-tools openssh-server mc htop gedit-plugins gnome-system-monitor libcanberra-gtk-module tree git gitk exfat-fuse exfat-utils p7zip p7zip-full inotify-tools icedtea-plugin chromium-browser chromium-browser-l10n openjfx
+apt-get -y install net-tools openssh-server mc htop gedit-plugins gnome-system-monitor libcanberra-gtk-module tree git gitk exfat-fuse exfat-utils p7zip p7zip-full inotify-tools chromium-browser chromium-browser-l10n openjfx
 
 
 ## Microsoft - Corefonts (Arial, Times, ...)
