@@ -1,3 +1,0 @@
-500-INSTALL-PROGRAMMING-SOFTWARE.txt
-
-Programmiersprachen, Editoren, etc.

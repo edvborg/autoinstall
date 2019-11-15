@@ -1,4 +1,0 @@
-100-INSTALL-SOFTWARE.txt
-
-Installations-Scripts für die
-Software-Installation

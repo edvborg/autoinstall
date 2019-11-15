@@ -1,4 +1,0 @@
-000-INSTALL-DESKTOP-VARIATION.txt
-
-In dieser Installation wird der
-Standard-Ubuntu-Desktop installiert.
