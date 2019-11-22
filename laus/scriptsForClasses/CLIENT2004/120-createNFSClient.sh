@@ -5,17 +5,11 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt-get -y install nfs-common autofs
 
-file="/etc/default/nfs-common"
-if ! [ -f $file".original" ];
-then
-	cp $file $file".original"
-fi
-updatetime=$(date +%Y%m%d-%T)
-newfile=$file".laus."$updatetime
-cp $file $newfile
-
-## String ersetzen
-sed '/NEED_GSSD=/ s/NEED_GSSD=/NEED_GSSD=yes/' -i $file
+## in 16.04 
+## /etc/default/nfs-common
+## NEED_GSSD=yes
+## was needed
+## laus configuration in APP1604
 
 
 ## Configuration autofs
