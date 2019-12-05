@@ -18,7 +18,6 @@ export DEBIAN_FRONTEND=noninteractive
 ## zip
 ## inotiy-tools for pdf-spooler monitor for virtual windows
 ## bless hex editor
-
 apt-get -y install net-tools openssh-server mc htop tree git gitk exfat-fuse exfat-utils p7zip p7zip-full inotify-tools bless
 
 

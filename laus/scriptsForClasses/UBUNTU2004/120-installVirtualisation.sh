@@ -7,5 +7,5 @@ export DEBIAN_FRONTEND=noninteractive
 
 ## Wine
 ## Virtualbox
-apt-get -y install wine-development virtualbox
+apt-get -y install wine virtualbox
 
