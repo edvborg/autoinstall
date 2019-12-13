@@ -74,7 +74,7 @@ echo "Directory for: " $LEHRMATERIAL_DIR
 OPTPROGS_DIR="/home/shares/optProgs"
 echo "Directory for: " $OPTPROGS_DIR
 
-PROGRAMMES_DIR="/home/shares/programmes"
+PROGRAMMES_DIR="/home/shares/optProgs/zWindows"
 echo "Directory for: " $PROGRAMMES_DIR
 
 CONFIG_WINONTOP_DIR=$MACHINE_STORAGE_DIR"/configwinontop"
@@ -256,8 +256,8 @@ done &
 #
 echo "Start virtual machine"
 # Starts VM and return to this script, when VM shuts down
-#VBoxManage startvm $MACHINE_NAME
-VirtualBox --startvm $MACHINE_NAME --fullscreen
+VBoxManage startvm $MACHINE_NAME
+#VirtualBox --startvm $MACHINE_NAME --fullscreen
 
 # Restore drectories/kill PDF - spooler monitor ##############################################
 #

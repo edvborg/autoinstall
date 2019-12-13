@@ -3,10 +3,15 @@
 # Source Laus-Settings
 . /etc/default/laus-setup
 
-#NOW=$(date +%Y.%m.%d-%T)
+# quiet installation
+export DEBIAN_FRONTEND=noninteractive
 
-# Machines
-#mv Windows.vdi Windows.vdi-old-$NOW
+## Install inotify-tools for printer connection
+## virtual machines to linux hosts
+## shortcut: vms print to watched directory
+## details: script autoinstall/vms/startVM.sh
+
+apt-get -y install inotify-tools
 
 # rsync Virtual Machines Directory
 rsync -a -u $MOUNT_PATH_ON_CLIENT/vms /opt
