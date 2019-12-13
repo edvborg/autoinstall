@@ -3,10 +3,20 @@
 . /etc/default/laus-setup
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
-## create shell file, which restores standard user
-## in /usr/local/bin
-## IMPORTANT: #!/bin/bash has to be in FIRST LINE
-cp files/restoreStandardUser.sh /usr/local/bin
+## create shell file in /usr/local/bin,
+## which restores standard user
+echo "#!/bin/bash
+
+# Restore Standard - User
+# replace standard user configuration with saved version
+
+rsync -a --delete --chown=user:root /home/user.save/ /home/user/
+
+# set Displayname back to user, if it has been changed
+sed '/user:x:3101/ s/user:x:3101.*/user:x:3101:2000:user:\/home\/user:\/bin\/bash/' -i /etc/passwd
+
+" > /usr/local/bin/restoreStandardUser.sh
+
 chmod 755 /usr/local/bin/restoreStandardUser.sh
 
 

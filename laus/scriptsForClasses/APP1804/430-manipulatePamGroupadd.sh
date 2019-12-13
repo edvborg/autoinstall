@@ -5,6 +5,7 @@
 echo "
 *;*;*;Al0000-2400;dialout
 " >> /etc/security/group.conf
+
 # write pam configuration file for allowing LDAP - users adding to groups on login
 echo "
 Name: activate /etc/security/group.conf

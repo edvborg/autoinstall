@@ -5,7 +5,6 @@
 
 ########################################
 ## Disable plymouth boot screen
-## from 90s to 5s
 ########################################
 file="/etc/default/grub"
 if ! test -f $file".original"; then

@@ -1,5 +1,9 @@
 #!/bin/bash
 
+## IMPORTANT:
+## shutDownAt22Clock may NOT be named shutDownAt22Clock.sh
+## #!/bin/bash has to be in FIRST LINE
+
 echo '#! /bin/bash
 
 CURRENT_HOUR=$(date +%H)
