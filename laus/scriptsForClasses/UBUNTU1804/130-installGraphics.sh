@@ -7,9 +7,9 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get -y install inkscape
 
 ## Gimp
-add-apt-repository ppa:otto-kesselgulasch/gimp
+#add-apt-repository ppa:otto-kesselgulasch/gimp
 
-apt-get update
+#apt-get update
 
 apt-get -y install gimp
 

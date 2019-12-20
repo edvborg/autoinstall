@@ -26,16 +26,11 @@ cp $file $newfile
 ## for auto mountpoints to /etc/auto.master
 echo "
 # NFS - directory for public shares
-# 1. optProg		->	Programme für Linux & Windows, die von einem Netzwerklaufwerk laufen
-# 2. lehrmaterial	->	Lehrmaterial bereitgestellt von den LehrerInnen
-# 3. schueler		->	gemeinsames Laufwerk schueler mit Schreibrechten für alle
+# 1. lehrmaterial	->	NFS - Share, where teachers place material for pupils read only
+# 2. schueler		->	NFS - Share, read - write for everybody
+# 3. optProg		->	NFS - Share, for programms starting from networkshare e.g. Android Studio, ...
 /home/shares	/etc/auto.shares	--ghost
 
-# HOME - directories für pupils
-/home/pupils	/etc/auto.pupils	--ghost
-
-# HOME - directories für teachers
-/home/teachers	/etc/auto.teachers	--ghost
 " >> /etc/auto.master
 
 
@@ -47,18 +42,5 @@ schueler		-fstype=nfs4	nfs03:/schueler
 
 optProgs		-fstype=nfs4	nfs04:/optProgs
 " > /etc/auto.shares
-
-
-## create config file for /home/pupils
-echo "
-*		-fstype=nfs4	smb01:/pupils/&
-" > /etc/auto.pupils
-
-
-## create config file for /home/teachers
-echo "
-*		-fstype=nfs4	smb01:/teachers/&
-" > /etc/auto.teachers
-
 
 systemctl restart autofs
