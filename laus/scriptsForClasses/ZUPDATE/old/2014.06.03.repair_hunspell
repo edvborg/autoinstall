@@ -1,6 +1,0 @@
-#! /bin/bash
-
-apt-get -y update
-
-## repair LibreOffice German Dictionary
-apt-get -y install hunspell hunspell-de-at
