@@ -3,34 +3,34 @@
 ### USAGE:
 ## installs printer ${PRINTER_NAME}
 ## with driver ${PRINTER_DRIVER}
+## and ${PRINTER_LOCATION}
+## and ${PRINTER_CONNECTION}
 ##
-## and should be named after printer modell 
+## AND should be named after printer modell 
 ## example: installPrinter_Brother_HL-7050.sh
+##
+## BECAUSE, enables installation of new printer with new name
+## without problems
+
+#### START DEFINE PARAMETER
 
 PRINTER_NAME="Raum-314-Printer"
 PRINTER_LOCATION="Drucker im Raum 314"
-PRINTER_DNS_NAME="r314pr01"
+PRINTER_CONNECTION="socket://r314pr01"
 
+## HELP to find printer modell:
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
 PRINTER_DRIVER="drv:///hpcups.drv/hp-laserjet_p2055dn-pcl3.ppd"
 
-
-## check if old /etc/cups/client.conf 
-## for redirection to other cups server exists
-if [ -f /etc/cups/client.conf ]
-then
-	systemctl stop cups
-	mv /etc/cups/client.conf /etc/cups/client.conf.tocups01
-	systemctl start cups
-fi
+#### END DEFINE PARAMETER
 
 
-## check if printer ${PRINTER_NAME} allready installed
+## check if printer ${PRINTER_NAME} already installed
+## remove, if already installed, and enable installation of new one
 if [ "$(lpstat -v | grep ${PRINTER_NAME})" != "" ];
 then
-	# delete printer
 	lpadmin -x ${PRINTER_NAME}
 fi
 
@@ -44,7 +44,7 @@ fi
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
-lpadmin -E -p "${PRINTER_NAME}" -v socket://${PRINTER_DNS_NAME} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION}" -E
+lpadmin -E -p "${PRINTER_NAME}" -v ${PRINTER_CONNECTION} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION}" -E
 
 # set as Default Printer
 lpadmin -d ${PRINTER_NAME} 

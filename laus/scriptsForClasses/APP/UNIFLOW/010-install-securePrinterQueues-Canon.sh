@@ -1,12 +1,38 @@
 #!/bin/bash
 
-if [ -f /etc/cups/client.conf ]
-then
-	initctl stop cups
-	mv /etc/cups/client.conf /etc/cups/client.conf.tocups01
-	initctl start cups
-fi
 
+### USAGE:
+## installs printer ${PRINTER_NAME}
+## with driver ${PRINTER_DRIVER}
+## and ${PRINTER_LOCATION}
+## and ${PRINTER_CONNECTION}
+##
+## AND should be named after printer modell 
+## example: installPrinter_Brother_HL-7050.sh
+##
+## BECAUSE, enables installation of new printer with new name
+## without problems
+
+#### START DEFINE PARAMETER
+
+PRINTER_NAME_SW="securePrint_sw"
+PRINTER_NAME_COLOR="securePrint_color"
+
+PRINTER_LOCATION_SW="Sichere Druckverbindung UNIFLOW s/w"
+PRINTER_LOCATION_COLOR="Sichere Druckverbindung UNIFLOW color"
+
+PRINTER_CONNECTION_SW="lpd://uniflow01/securePrint_sw"
+PRINTER_CONNECTION_COLOR="lpd://uniflow01/securePrint_color"
+
+## HELP to find printer modell:
+## Find Print Driver with:
+## >> lpinfo --make-and-model 'Lexmark' -m
+
+PRINTER_DRIVER="lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz"
+
+#### END DEFINE PARAMETER
+
+#### START install CANON print diver
 . /etc/default/laus-setup
 
 SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
@@ -15,14 +41,26 @@ SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 apt-get -y purge cque-de
 rm -R /opt/cel
 
-# install package cque-de for Ubuntu 16.04
-# dpkg -i $SOURCE_PATH/CQue_v3.0.4_Linux_64_DE.deb
-# install package cque-de for Ubuntu 18.04
-dpkg -i $SOURCE_PATH/CQue_v4.0.1_Linux_64_DE.deb
+# install package cque-de for Ubuntu
+apt-get install $SOURCE_PATH/CQue_v4.0.1_Linux_64_DE.deb
 
-# Find Printer with:
-# lpinfo --make-and-model 'Lexmark' -m or lpinfo --make-and-model -m | grep Lexmark
+#### END install CANON print diver
 
+
+## check if printer ${PRINTER_NAME_SW} and ${PRINTER_NAME_COLOR } already installed
+## remove, if already installed, and enable installation of new one
+if [ "$(lpstat -v | grep ${PRINTER_NAME_SW})" != "" ];
+then
+	lpadmin -x ${PRINTER_NAME_SW}
+fi
+
+if [ "$(lpstat -v | grep ${PRINTER_NAME_COLOR})" != "" ];
+then
+	lpadmin -x ${PRINTER_NAME_COLOR}
+fi
+
+
+## Options in lpadmin declared:
 # -E		Enables the destination and accepts jobs
 # -p		Specifies a PostScript Printer Description file to use with the printer.
 # -v		device-uri
@@ -30,25 +68,27 @@ dpkg -i $SOURCE_PATH/CQue_v4.0.1_Linux_64_DE.deb
 # -L		Provides a textual location of the destination.
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
-#
-# Install Queue for Black/White
-lpadmin -E -p securePrint_sw -v lpd://uniflow01/securePrint_sw -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Sichere Druckverbindung UNIFLOW s/w" -E
 
-# Install Queue for Color
-lpadmin -E -p securePrint_color -v lpd://uniflow01/securePrint_color -m 'lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz' -L "Sichere Druckverbindung UNIFLOW color" -E
+# Install Queue on Server UNIFLOW uniflow01 for Black/White
+lpadmin -E -p "${PRINTER_NAME_SW}" -v ${PRINTER_CONNECTION_SW} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_SW}" -E
 
-# set Standard to Color for Queue Color
-lpoptions -p securePrint_color -o ColourModel=Colour
+# Install Queue on Server UNIFLOW uniflow01 for Color
+lpadmin -E -p "${PRINTER_NAME_COLOR}" -v ${PRINTER_CONNECTION_COLOR} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_COLOR}" -E
 
 # set Standard to SW for Queue sw
-lpoptions -p securePrint_sw -o ColourModel=Grayscale
+lpoptions -p ${PRINTER_NAME_SW} -o ColourModel=Grayscale
 
 # remove Duplex as Default for Queue sw
-lpoptions -p securePrint_sw -o Duplex=None
+lpoptions -p ${PRINTER_NAME_SW} -o Duplex=None
+
+# set Standard to Color for Queue Color
+lpoptions -p ${PRINTER_NAME_COLOR} -o ColourModel=Colour
 
 # remove Duplex as Default for Queue Color
-lpoptions -p securePrint_color -o Duplex=None
+lpoptions -p ${PRINTER_NAME_COLOR} -o Duplex=None
 
 # set Standard Print-Queue
-lpadmin -d securePrint_sw
+lpadmin -d ${PRINTER_NAME_SW}
+
+
 

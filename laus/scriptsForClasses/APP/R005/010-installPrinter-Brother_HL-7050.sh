@@ -1,15 +1,41 @@
 #!/bin/bash
 
-if [ -f /etc/cups/client.conf ]
+### USAGE:
+## installs printer ${PRINTER_NAME}
+## with driver ${PRINTER_DRIVER}
+## and ${PRINTER_LOCATION}
+## and ${PRINTER_CONNECTION}
+##
+## AND should be named after printer modell 
+## example: installPrinter_Brother_HL-7050.sh
+##
+## BECAUSE, enables installation of new printer with new name
+## without problems
+
+#### START DEFINE PARAMETER
+
+PRINTER_NAME="Raum-005-Printer"
+PRINTER_LOCATION="Drucker im Raum 005"
+PRINTER_CONNECTION="socket://r005pr01"
+
+## HELP to find printer modell:
+## Find Print Driver with:
+## >> lpinfo --make-and-model 'Lexmark' -m
+
+PRINTER_DRIVER="openprinting-ppds:0/ppd/openprinting/Brother/BR7050_2_GPL.ppd"
+
+#### END DEFINE PARAMETER
+
+
+## check if printer ${PRINTER_NAME} already installed
+## remove, if already installed, and enable installation of new one
+if [ "$(lpstat -v | grep ${PRINTER_NAME})" != "" ];
 then
-	initctl stop cups
-	mv /etc/cups/client.conf /etc/cups/client.conf.tocups01
-	initctl start cups
+	lpadmin -x ${PRINTER_NAME}
 fi
 
-# Find Printer with:
-# lpinfo --make-and-model 'Lexmark' -m
 
+## Options in lpadmin declared:
 # -E		Enables the destination and accepts jobs
 # -p		Specifies a PostScript Printer Description file to use with the printer.
 # -v		device-uri
@@ -18,24 +44,9 @@ fi
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
-# seems to have a timeout problem
-# wait for 30 seconds
-sleep 30
-
-lpadmin -E -p Raum-005-Printer -v socket://r005pr01 -m 'openprinting-ppds:0/ppd/openprinting/Brother/BR7050_2_GPL.ppd' -L "Drucker im Raum-005" -E
+lpadmin -E -p "${PRINTER_NAME}" -v ${PRINTER_CONNECTION} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION}" -E
 
 # set as Default Printer
-lpadmin -d Raum-005-Printer
+lpadmin -d ${PRINTER_NAME} 
 
-# Alternatives
-#gutenprint.5.2://brother-hl-7050/expert Brother HL-7050 - CUPS+Gutenprint v5.2.10-pre2
-#openprinting-ppds:0/ppd/openprinting/Brother/BR7050_2_GPL.ppd Brother HL-7050 BR-Script3
-#foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Brother-HL-7050-lj5gray.ppd Brother HL-7050 Foomatic/lj5gray
-#foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Brother-HL-7050-Postscript.ppd Brother HL-7050 Foomatic/Postscript
-#foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Brother-HL-7050-pxlmono.ppd Brother HL-7050 Foomatic/pxlmono
 
-# upstart-command initctl does not work with systemd
-# we drop it, so printer install will work for both services
-# printer will be present on the next start
-#initctl stop cups
-#initctl start cups
