@@ -97,7 +97,7 @@ echo "Manage Virtualbox configuration directorys"
 echo "Save original .VirtualBox directory, if exists and .VirtualBox.$USER does not exist"
 if [ -d $HOME/.config/VirtualBox ] && [ ! -d $HOME/.VirtualBox.$USER ];
 then
-	mv $HOME/.config/VirtualBox $HOME/.VirtualBox.$USER/
+	mv $HOME/.config/VirtualBox $HOME/.VirtualBox.$USER
 fi
 
 # Set ramsize for host
@@ -193,7 +193,7 @@ then
 	echo "Create shared Folder for Directory: "$LEHRMATERIAL_DIR
 	VBoxManage sharedfolder add $MACHINE_NAME --name lehrmaterial --hostpath $LEHRMATERIAL_DIR
 fi
-if [ -d $OPT_PROG_DIR ];
+if [ -d $OPTPROGS_DIR ];
 then
 	echo "Create shared Folder for Directory: "$OPTPROGS_DIR
 	VBoxManage sharedfolder add $MACHINE_NAME --name optProgs --hostpath $OPTPROGS_DIR
@@ -269,7 +269,7 @@ rm -R $MACHINE_WORK_DIR
 echo "Restore original .config/VirtualBox Directory if exists."
 if [ -d $HOME/.VirtualBox.$USER ];
 then
-	mv $HOME/.VirtualBox.$USER $HOME/.config/VirtualBox/
+	mv $HOME/.VirtualBox.$USER $HOME/.config/VirtualBox
 fi
 
 # kill running inotify
