@@ -1,10 +1,15 @@
 #!/bin/bash
 
 
-# write groups, to which LDAP - users are added on login
+## write groups, to which LDAP - users are added on login
+# dialout: for using arduino programming software
+# vboxusers: to access USB via virtualbox
+##
+
 echo "
-*;*;*;Al0000-2400;dialout
+*;*;*;Al0000-2400;dialout,vboxusers
 " >> /etc/security/group.conf
+
 # write pam configuration file for allowing LDAP - users adding to groups on login
 echo "
 Name: activate /etc/security/group.conf
