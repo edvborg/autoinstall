@@ -5,21 +5,32 @@
 # Changes by Reinhard Fink
 # call Script with Parameters
 #
-# 1:	Path/Filename of Virtual Machine Harddisk File with Ending .vdi
+# 1:    Parameter:
+#       Path/Filename of Virtual Machine Harddisk File with Ending .vdi
 #
-# 2:	VBoxManage Option1 Option1-Parameter
-#	VBoxManage Option1 Option1-Parameter Option2 Option2-Parameter
+# 2:    Parameter for VBoxManage modifyvm 
+#       Path/Filename Option1 Option1-Parameter
+#       Path/Filename Option1 Option1-Parameter Option2 Option2-Parameter ...
 #
 # Examples: 
-#	startVM.sh /opt/vms/win7.vdi			  
-#   	starts Virtualmachine win.vdi in directory /opt/vms
+#       * NO Option:
+#         >> startVM.sh /opt/vms/win7.vdi
+#         starts Virtualmachine win.vdi in directory /opt/vms
 #
-#	startVM	/opt/vms/win7.vdi --acpi off 
-#   	starts Virtualmachine win7.vdi in directory /opt/vms and 
-#   	turns acpi off. 
-#	Script will call VBoxManage modifyvm $MACHINE --acpi off 
-#	
-# Create Variables and Directories ######################################################
+#       * ONE Option:
+#         >> startVM.sh /opt/vms/win7.vdi --acpi off
+#         starts Virtualmachine win7.vdi in directory /opt/vms and
+#         turns acpi off.
+#         >> VBoxManage --nologo modifyvm $MACHINE_NAME --acpi off
+#         will be added to standard creation off machine
+#
+#       * TWO Options:
+#         >> startVM.sh /opt/vms/win10.vdi --ioapic on --cpus 2
+#         starts Virtualmachine win10.vdi in directory /opt/vms and
+#         with 2 CPUs and turns ioapic on.
+#         >> VBoxManage --nologo modifyvm $MACHINE_NAME --ioapic on --cpus 2
+#         will be added to standard creation off machine
+#
 
 
 ## Helper function for inotify - pdf - printer - spooler
@@ -33,6 +44,9 @@ function killInotifyWait()
 	fi
 }
 
+
+# Create Variables and Directories ######################################################
+
 ## Set variables
 echo "Set variables"
 
@@ -42,6 +56,7 @@ MACHINE_PATH=$(dirname $MACHINE_PATH_AND_FILE)
 
 MACHINE_FILE=$(basename $MACHINE_PATH_AND_FILE)
 
+# MACHINE_NAME = MACHINE_FILE without ending .vdi
 MACHINE_NAME=${MACHINE_FILE%.vdi}
 
 MACHINE_WORK_DIR=/tmp/${USER}_vms
@@ -122,6 +137,8 @@ VBoxManage --nologo modifyvm $MACHINE_NAME --memory $VM_RAM
 VBoxManage --nologo modifyvm $MACHINE_NAME --vram 128
 VBoxManage --nologo modifyvm $MACHINE_NAME --acpi on
 # ioacoi off IMPORTANT: otherwise Windows 7 wants to reinstall CPU - Driver
+# Windows 10 is installed with --ioapic on ??
+# so use this script with optioin --ioapic on
 VBoxManage --nologo modifyvm $MACHINE_NAME --ioapic off
 VBoxManage --nologo modifyvm $MACHINE_NAME --hwvirtex on
 VBoxManage --nologo modifyvm $MACHINE_NAME --pae off
@@ -167,17 +184,21 @@ VBoxManage setextradata global GUI/SuppressMessages confirmGoingFullscreen,confi
 VBoxManage setextradata $MACHINE_NAME GUI/Fullscreen on
 VBoxManage setextradata $MACHINE_NAME GUI/ShowMiniToolBar no
 
-# Apply command line options from script to VBoxManage  
-if [ ! -z $2 ];
-then 
-	echo "Apply command line options NR 1 from script to VBoxManage "
-	VBoxManage --nologo modifyvm $MACHINE_NAME $2 $3
-fi
-if [ ! -z $4 ];
-then 
-	echo "Apply command line options NR 2 from script to VBoxManage "
-	VBoxManage --nologo modifyvm $MACHINE_NAME $4 $5
-fi
+# Apply command line options from script to VBoxManage
+
+# remove first comand line parameter <=> Machine-path/filename
+shift
+
+((i = 0))
+while [ ! -z $1 ];
+do
+        ((i = i + 1))
+        echo "Apply command line options NR $i from script to VBoxManage "
+        VBoxManage --nologo modifyvm $MACHINE_NAME $1 $2
+        # remove options $1 and $2
+        shift
+        shift
+done
 
 
 # Create Shared Folder
