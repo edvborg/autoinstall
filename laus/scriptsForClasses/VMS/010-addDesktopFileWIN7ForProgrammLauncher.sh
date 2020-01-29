@@ -3,13 +3,25 @@
 # Source Laus-Settings
 . /etc/default/laus-setup
 
-# copy desktop file: win7.desktop 
-# from: /opt/vms 
-# to: /usr/share/applications
-# for use in Desktop-Manager
+# create desktop file in: 
+# /usr/share/applications
+# Windows 7 in a VirtualBox Machine
 DESKTOPFILE=win7.desktop
 DESKTOPFILEPATH=/usr/share/applications
 
-cp -v $MOUNT_PATH_ON_CLIENT/vms/$DESKTOPFILE $DESKTOPFILEPATH
-chown root:root $DESKTOPFILEPATH/$DESKTOPFILE
-chmod 644 $DESKTOPFILEPATH/$DESKTOPFILE
+echo "[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Icon=/opt/vms/win7.png
+Exec=/opt/vms/startVM.sh /opt/vms/win7.vdi --ioapic off
+Categories=Application
+Comment=Startet Windows 7 in einer VirtualBox Maschine
+Comment[de]=Starts Windows 7 in a VirtualBox Machine
+GenericName=Windows 7
+GenericName[de]=Windows 7
+Name=Windows 7
+Name[de]=Windows 7
+StartupNotify=true
+" > $DESKTOPFILEPATH/$DESKTOPFILE
+

@@ -126,6 +126,7 @@ VM_RAM=$(($VM_RAM - $HOST_RAM))
 #VM_RAM=1024
 echo "Ram Size for VM: " $VM_RAM
 
+
 # Create virtual machine ################################################################
 #
 echo "Create virtual machine"
@@ -178,14 +179,8 @@ VBoxManage --nologo storagectl $MACHINE_NAME --name SATA-Controller-$MACHINE_NAM
 echo "Attach Harddisk to Virtual Machine"
 #VBoxManage --nologo storageattach $MACHINE_NAME --storagectl SATA-Controller-$MACHINE_NAME --port 0 --device 0 --type hdd --medium $MACHINE_WORK_DIR/$MACHINE_NAME/$MACHINE_FILE --mtype immutable
 VBoxManage --nologo storageattach $MACHINE_NAME --storagectl SATA-Controller-$MACHINE_NAME --port 0 --device 0 --type hdd --medium $MACHINE_PATH_AND_FILE --mtype immutable
-echo "Set Display Settings/Supress Notifications"
-VBoxManage setextradata global GUI/SuppressMessages confirmGoingFullscreen,confirmInputCapture,remindAboutAutoCapture,remindAboutWrongColorDepth,remindAboutMouseIntegration
 
-VBoxManage setextradata $MACHINE_NAME GUI/Fullscreen on
-VBoxManage setextradata $MACHINE_NAME GUI/ShowMiniToolBar no
-
-# Apply command line options from script to VBoxManage
-
+# Apply command line options from script to VBoxManage modifyvm
 # remove first comand line parameter <=> Machine-path/filename
 shift
 
@@ -193,7 +188,7 @@ shift
 while [ ! -z $1 ];
 do
         ((i = i + 1))
-        echo "Apply command line options NR $i from script to VBoxManage "
+        echo "Apply command line options NR $i from script: >>VBoxManage modifyvm $1 $2"
         VBoxManage --nologo modifyvm $MACHINE_NAME $1 $2
         # remove options $1 and $2
         shift
@@ -229,7 +224,7 @@ fi
 if [ -d $CONFIG_WINONTOP_DIR ];
 then
 	echo "Create shared Folder Configuration Directory: "$CONFIG_WINONTOP_DIR
-	VBoxManage --nologo sharedfolder add $MACHINE_NAME --name configwinontop --hostpath $CONFIG_WINONTOP_DIR
+	VBoxManage sharedfolder add $MACHINE_NAME --name configwinontop --hostpath $CONFIG_WINONTOP_DIR
 fi
 
 echo "Create shared folder for USB"
@@ -273,12 +268,22 @@ do
 	rm "$PATH_AND_FILE"; 
 done &
 
+
+# Set extraoptions
+echo "Set Display Settings/Supress Notifications"
+VBoxManage setextradata global GUI/SuppressMessages confirmGoingFullscreen,confirmInputCapture,remindAboutAutoCapture,remindAboutWrongColorDepth,remindAboutMouseIntegration
+
+VBoxManage setextradata $MACHINE_NAME GUI/Fullscreen on
+VBoxManage setextradata $MACHINE_NAME GUI/ShowMiniToolBar no
+
+
 # Starts VM ################################################################
 #
 echo "Start virtual machine"
 # Starts VM and return to this script, when VM shuts down
-VBoxManage startvm $MACHINE_NAME
-#VirtualBox --startvm $MACHINE_NAME --fullscreen
+# VBoxManage startvm $MACHINE_NAME
+VirtualBoxVM --startvm $MACHINE_NAME
+
 
 # Restore drectories/kill PDF - spooler monitor ##############################################
 #

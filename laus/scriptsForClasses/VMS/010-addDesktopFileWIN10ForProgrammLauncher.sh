@@ -3,13 +3,25 @@
 # Source Laus-Settings
 . /etc/default/laus-setup
 
-# copy desktop file: win10.desktop 
-# from: /opt/vms 
-# to: /usr/share/applications
-# for use in Desktop-Manager
+# create desktop file in: 
+# /usr/share/applications
+# Windows 10 in a VirtualBox Machine
 DESKTOPFILE=win10.desktop
 DESKTOPFILEPATH=/usr/share/applications
 
-cp -v $MOUNT_PATH_ON_CLIENT/vms/$DESKTOPFILE $DESKTOPFILEPATH
-chown root:root $DESKTOPFILEPATH/$DESKTOPFILE
-chmod 644 $DESKTOPFILEPATH/$DESKTOPFILE
+echo "[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Icon=/opt/vms/win10.png
+Exec=/opt/vms/startVM.sh /opt/vms/win10.vdi --ioapic off --cpus 2
+Categories=Application
+Comment=Startet Windows 10 in einer VirtualBox Maschine
+Comment[de]=Starts Windows 10 in a VirtualBox Machine
+GenericName=Windows 10
+GenericName[de]=Windows 10
+Name=Windows 10
+Name[de]=Windows 10
+StartupNotify=true
+" > $DESKTOPFILEPATH/$DESKTOPFILE
+
