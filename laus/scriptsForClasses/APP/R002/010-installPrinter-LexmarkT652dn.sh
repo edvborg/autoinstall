@@ -44,7 +44,7 @@ fi
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
-lpadmin -E -p "${PRINTER_NAME}" -v ${PRINTER_CONNECTION} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION}" -E
+lpadmin -E -p "${PRINTER_NAME}" -v "${PRINTER_CONNECTION}" -m "${PRINTER_DRIVER}" -L "${PRINTER_LOCATION}" -E
 
 # set as Default Printer
 lpadmin -d ${PRINTER_NAME} 

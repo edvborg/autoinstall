@@ -282,7 +282,12 @@ VBoxManage setextradata $MACHINE_NAME GUI/ShowMiniToolBar no
 echo "Start virtual machine"
 # Starts VM and return to this script, when VM shuts down
 # VBoxManage startvm $MACHINE_NAME
-VirtualBoxVM --startvm $MACHINE_NAME
+if [ -f /usr/bin/VirtualBoxVM ];
+then
+	VirtualBoxVM --startvm $MACHINE_NAME
+else
+	VirtualBox --startvm $MACHINE_NAME
+fi
 
 
 # Restore drectories/kill PDF - spooler monitor ##############################################
