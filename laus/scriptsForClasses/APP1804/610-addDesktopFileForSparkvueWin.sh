@@ -13,8 +13,8 @@ echo "[Desktop Entry]
 Version=1.0
 Type=Application
 Terminal=true
-Icon=sparcvue.png
-Exec=/opt/vms/startVM.sh /opt/vms/win10.vdi --ioapic on --cpus 2 --usb on
+Icon=sparkvue.png
+Exec=/opt/vms/startVM.sh /opt/vms/win10.vdi --ioapic on --cpus 2 --usbxhci on
 Categories=Application
 Comment=Startet Windows 10 in einer VirtualBox Maschine mit USB
 Comment[de]=Starts Windows 10 in a VirtualBox Machine with USB

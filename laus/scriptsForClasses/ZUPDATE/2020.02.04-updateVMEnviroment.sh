@@ -15,9 +15,3 @@ chown -R root:root /opt/vms
 chmod -R g+r /opt/vms
 chmod -R o+r /opt/vms
 
-
-# install inotify-tools
-apt-get -y update
-apt-get -y install inotify-tools
-
-
