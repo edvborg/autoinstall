@@ -16,14 +16,16 @@
 
 PRINTER_NAME="Raum-002-Printer"
 PRINTER_LOCATION="Drucker im Raum 002"
-#PRINTER_CONNECTION="socket://r002pr01"
-PRINTER_CONNECTION="ipp://r002pr01:631/ipp/print
+# ATTENTION: r002pr01:443 because r002pr01:631 will not work 
+PRINTER_CONNECTION="ipps://r002pr01:443/ipp/print"
+# PRINTER_CONNECTION="ipp://r002pr01:631/ipp/print" works
 
 ## HELP to find printer modell:
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
-PRINTER_DRIVER="driverless:ipp://r002pr01:631/ipp/print"
+# ATTENTION: r002pr01:443 
+PRINTER_DRIVER="driverless:ipp://r002pr01:443/ipp/print"
 
 #### END DEFINE PARAMETER
 
