@@ -16,13 +16,14 @@
 
 PRINTER_NAME="Raum-002-Printer"
 PRINTER_LOCATION="Drucker im Raum 002"
-PRINTER_CONNECTION="socket://r002pr01"
+#PRINTER_CONNECTION="socket://r002pr01"
+PRINTER_CONNECTION="ipp://r002pr01:631/ipp/print
 
 ## HELP to find printer modell:
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
-PRINTER_DRIVER="foomatic-db-compressed-ppds:0/ppd/foomatic-ppd/Lexmark-T652-Postscript.ppd"
+PRINTER_DRIVER="driverless:ipp://r002pr01:631/ipp/print"
 
 #### END DEFINE PARAMETER
 

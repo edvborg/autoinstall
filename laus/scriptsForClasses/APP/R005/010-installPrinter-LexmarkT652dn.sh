@@ -14,9 +14,9 @@
 
 #### START DEFINE PARAMETER
 
-PRINTER_NAME="Raum-002-Printer"
-PRINTER_LOCATION="Drucker im Raum 002"
-PRINTER_CONNECTION="socket://r002pr01"
+PRINTER_NAME="Raum-005-Printer"
+PRINTER_LOCATION="Drucker im Raum 005"
+PRINTER_CONNECTION="socket://r005pr01"
 
 ## HELP to find printer modell:
 ## Find Print Driver with:
