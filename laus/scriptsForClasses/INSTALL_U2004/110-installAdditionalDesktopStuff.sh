@@ -16,3 +16,7 @@ apt-get -y install gedit-plugins chromium-browser chromium-browser-l10n openjfx
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections
 apt-get -y install ttf-mscorefonts-installer
 
+
+## cros-fonts for Microsoft Calibri and Cambria:
+apt install fonts-crosextra-carlito fonts-crosextra-caladea
+
