@@ -15,37 +15,34 @@
 
 #### START DEFINE PARAMETER
 
-PRINTER_NAME_SW="securePrint_sw"
-PRINTER_NAME_COLOR="securePrint_color"
+PRINTER_NAME_SW="KonfZi-Kopierer_sw"
+PRINTER_NAME_COLOR="KonfZi-Kopierer_color"
 
-PRINTER_LOCATION_SW="Sichere Druckverbindung UNIFLOW s/w"
-PRINTER_LOCATION_COLOR="Sichere Druckverbindung UNIFLOW color"
+PRINTER_LOCATION_SW="Kopierer Gang GfB S/W"
+PRINTER_LOCATION_COLOR="Kopierer Gang GfB COLOR"
 
-PRINTER_CONNECTION_SW="lpd://uniflow01/securePrint_sw"
-PRINTER_CONNECTION_COLOR="lpd://uniflow01/securePrint_color"
+PRINTER_CONNECTION="socket://r115pr02"
 
 ## HELP to find printer modell:
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
-PRINTER_DRIVER="lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz"
-
-#### END DEFINE PARAMETER
-
-#### START install CANON print diver
 . /etc/default/laus-setup
 
-SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
 
-# clean possible old installationsfiles
-apt-get -y purge cque-de
-rm -R /opt/cel
+## lpoptions did not work in UBUNUTU 20.04
+## therefore Options for Duplex and ColourModel were set directly in the original ppd - Files
 
-# install package cque-de for Ubuntu
-apt-get install $SOURCE_PATH/CQue_v4.0.6_Linux_64_DE.deb
+PRINTER_DRIVER_SW="cel-iradvc7260-pcl-de_Duplex_None.ppd"
 
-#### END install CANON print diver
+PRINTER_DRIVER_COLOR="cel-iradvc7260-pcl-de_Duplex_None_Colour.ppd"
 
+## Path, where changed ppds are stored on LAUS-Server
+SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles/Canon/
+
+## for installation ppds have to be located in /usr/share/cups/model
+cp ${SOURCE_PATH}${PRINTER_DRIVER_SW} /usr/share/cups/model
+cp ${SOURCE_PATH}${PRINTER_DRIVER_COLOR} /usr/share/cups/model
 
 ## check if printer ${PRINTER_NAME_SW} and ${PRINTER_NAME_COLOR } already installed
 ## remove, if already installed, and enable installation of new one
@@ -69,11 +66,11 @@ fi
 
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
-# Install Queue on Server UNIFLOW uniflow01 for Black/White
-lpadmin -E -p "${PRINTER_NAME_SW}" -v ${PRINTER_CONNECTION_SW} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_SW}" -E
+# Install Queue for Black/White
+lpadmin -E -p "${PRINTER_NAME_SW}" -v ${PRINTER_CONNECTION} -m ${PRINTER_DRIVER_SW} -L "${PRINTER_LOCATION_SW}" -E
 
-# Install Queue on Server UNIFLOW uniflow01 for Color
-lpadmin -E -p "${PRINTER_NAME_COLOR}" -v ${PRINTER_CONNECTION_COLOR} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_COLOR}" -E
+# Install Queue for Color
+lpadmin -E -p "${PRINTER_NAME_COLOR}" -v ${PRINTER_CONNECTION} -m ${PRINTER_DRIVER_COLOR} -L "${PRINTER_LOCATION_COLOR}" -E
 
 # set Standard Print-Queue
 lpadmin -d ${PRINTER_NAME_SW}

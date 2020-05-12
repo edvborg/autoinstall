@@ -15,14 +15,14 @@
 
 #### START DEFINE PARAMETER
 
-PRINTER_NAME_SW="securePrint_sw"
-PRINTER_NAME_COLOR="securePrint_color"
+PRINTER_NAME_SW="KonfZi-Kopierer_sw"
+PRINTER_NAME_COLOR="KonfZi-Kopierer_color"
 
-PRINTER_LOCATION_SW="Sichere Druckverbindung UNIFLOW s/w"
-PRINTER_LOCATION_COLOR="Sichere Druckverbindung UNIFLOW color"
+PRINTER_LOCATION_SW="Kopierer Gang AS S/W"
+PRINTER_LOCATION_COLOR="Kopierer Gang AS COLOR"
 
-PRINTER_CONNECTION_SW="lpd://uniflow01/securePrint_sw"
-PRINTER_CONNECTION_COLOR="lpd://uniflow01/securePrint_color"
+PRINTER_DNS_NAME_SW="r115pr02"
+PRINTER_DNS_NAME_COLOR="r115pr02"
 
 ## HELP to find printer modell:
 ## Find Print Driver with:
@@ -42,7 +42,7 @@ apt-get -y purge cque-de
 rm -R /opt/cel
 
 # install package cque-de for Ubuntu
-apt-get install $SOURCE_PATH/CQue_v4.0.6_Linux_64_DE.deb
+apt-get install $SOURCE_PATH/CQue_v4.0.1_Linux_64_DE.deb
 
 #### END install CANON print diver
 
@@ -70,10 +70,22 @@ fi
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
 # Install Queue on Server UNIFLOW uniflow01 for Black/White
-lpadmin -E -p "${PRINTER_NAME_SW}" -v ${PRINTER_CONNECTION_SW} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_SW}" -E
+lpadmin -E -p "${PRINTER_NAME_SW}" -v socket://${PRINTER_DNS_NAME_SW} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_SW}" -E
 
 # Install Queue on Server UNIFLOW uniflow01 for Color
-lpadmin -E -p "${PRINTER_NAME_COLOR}" -v ${PRINTER_CONNECTION_COLOR} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_COLOR}" -E
+lpadmin -E -p "${PRINTER_NAME_COLOR}" -v socket://${PRINTER_DNS_NAME_COLOR} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_COLOR}" -E
+
+# set Standard to SW for Queue sw
+lpoptions -p ${PRINTER_NAME_SW} -o ColourModel=Grayscale
+
+# remove Duplex as Default for Queue sw
+lpoptions -p ${PRINTER_NAME_SW} -o Duplex=None
+
+# set Standard to Color for Queue Color
+lpoptions -p ${PRINTER_NAME_COLOR} -o ColourModel=Colour
+
+# remove Duplex as Default for Queue Color
+lpoptions -p ${PRINTER_NAME_COLOR} -o Duplex=None
 
 # set Standard Print-Queue
 lpadmin -d ${PRINTER_NAME_SW}
