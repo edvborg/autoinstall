@@ -8,7 +8,8 @@ export DEBIAN_FRONTEND=noninteractive
 ## gedit-plugins -> Plugins for gedit: git, terminal, show spaces, ...
 ## Additional Chromium - Browser
 ## Java FX 
-apt-get -y install gedit-plugins chromium-browser chromium-browser-l10n openjfx
+## PDF Tool Kit (cut / merge / rotate PDFs)
+apt-get -y install gedit-plugins chromium-browser chromium-browser-l10n openjfx pdftk
 
 
 ## Microsoft - Corefonts (Arial, Times, ...)
