@@ -15,29 +15,34 @@
 
 #### START DEFINE PARAMETER
 
-PRINTER_NAME_SW="securePrint_sw"
-PRINTER_NAME_COLOR="securePrint_color"
+PRINTER_NAME_SW="KonfZi-Kopierer_sw"
+PRINTER_NAME_COLOR="KonfZi-Kopierer_color"
 
-PRINTER_LOCATION_SW="Sichere Druckverbindung UNIFLOW s/w"
-PRINTER_LOCATION_COLOR="Sichere Druckverbindung UNIFLOW color"
+PRINTER_LOCATION_SW="Kopierer Gang AS S/W"
+PRINTER_LOCATION_COLOR="Kopierer Gang AS COLOR"
 
-PRINTER_CONNECTION_SW="lpd://uniflow01/securePrint_sw"
-PRINTER_CONNECTION_COLOR="lpd://uniflow01/securePrint_color"
+PRINTER_CONNECTION_SW="socket://r115pr02"
+PRINTER_CONNECTION_COLOR="socket://r115pr02"
 
 ## HELP to find printer modell:
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
-PRINTER_DRIVER="lsb/usr/CNRCUPSIRADVC7270ZK.ppd"
+PRINTER_DRIVER="lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz"
 
 #### END DEFINE PARAMETER
 
 #### START install CANON print diver
 . /etc/default/laus-setup
 
-SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles/Canon/UFRII
-cd ${SOURCE_PATH}
-./install.sh
+SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
+
+# clean possible old installationsfiles
+apt-get -y purge cque-de
+rm -R /opt/cel
+
+# install package cque-de for Ubuntu
+apt-get install $SOURCE_PATH/CQue_v4.0.6_Linux_64_DE.deb
 
 #### END install CANON print diver
 
@@ -65,10 +70,10 @@ fi
 #	Note the two -E options. The first one (before -p) forces encryption when connecting to the server. The last one enables the destination and starts accepting jobs.
 
 # Install Queue on Server UNIFLOW uniflow01 for Black/White
-lpadmin -E -p "${PRINTER_NAME_SW}" -v ${PRINTER_CONNECTION_SW} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_SW}" -E
+lpadmin -E -p "${PRINTER_NAME_SW}" -v ${PRINTER_CONNECTION_SW} -m "${PRINTER_DRIVER}" -L "${PRINTER_LOCATION_SW}" -E
 
 # Install Queue on Server UNIFLOW uniflow01 for Color
-lpadmin -E -p "${PRINTER_NAME_COLOR}" -v ${PRINTER_CONNECTION_COLOR} -m ${PRINTER_DRIVER} -L "${PRINTER_LOCATION_COLOR}" -E
+lpadmin -E -p "${PRINTER_NAME_COLOR}" -v ${PRINTER_CONNECTION_COLOR} -m "${PRINTER_DRIVER}" -L "${PRINTER_LOCATION_COLOR}" -E
 
 # set Standard Print-Queue
 lpadmin -d ${PRINTER_NAME_SW}

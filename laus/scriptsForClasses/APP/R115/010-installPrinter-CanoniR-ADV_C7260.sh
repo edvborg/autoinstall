@@ -28,21 +28,16 @@ PRINTER_CONNECTION_COLOR="socket://r115pr02"
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
-PRINTER_DRIVER="lsb/usr/cel/cel-iradvc7260-pcl-de.ppd.gz"
+PRINTER_DRIVER="lsb/usr/CNRCUPSIRADVC7270ZK.ppd"
 
 #### END DEFINE PARAMETER
 
 #### START install CANON print diver
 . /etc/default/laus-setup
 
-SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles
-
-# clean possible old installationsfiles
-apt-get -y purge cque-de
-rm -R /opt/cel
-
-# install package cque-de for Ubuntu
-apt-get install $SOURCE_PATH/CQue_v4.0.6_Linux_64_DE.deb
+SOURCE_PATH=$MOUNT_PATH_ON_CLIENT/xBigFiles/Canon/UFRII
+cd ${SOURCE_PATH}
+./install.sh
 
 #### END install CANON print diver
 
