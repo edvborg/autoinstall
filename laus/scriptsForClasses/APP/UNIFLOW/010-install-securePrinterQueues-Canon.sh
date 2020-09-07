@@ -28,7 +28,8 @@ PRINTER_CONNECTION_COLOR="lpd://uniflow01/securePrint_color"
 ## Find Print Driver with:
 ## >> lpinfo --make-and-model 'Lexmark' -m
 
-PRINTER_DRIVER="lsb/usr/CNRCUPSIRADVC7270ZK.ppd"
+#PRINTER_DRIVER="lsb/usr/CNRCUPSIRADVC7270ZK.ppd"
+PRINTER_DRIVER="openprinting-ppds:0/ppd/openprinting/Canon/cnadvc7260x1g.ppd"
 
 #### END DEFINE PARAMETER
 
