@@ -42,7 +42,7 @@ apt-get -y purge cque-de
 rm -R /opt/cel
 
 # install package cque-de for Ubuntu
-apt-get install $SOURCE_PATH/CQue_v4.0.6_Linux_64_DE.deb
+apt-get install $SOURCE_PATH/Canon/CQue_v4.0.1_Linux_64_DE.deb
 
 #### END install CANON print diver
 
