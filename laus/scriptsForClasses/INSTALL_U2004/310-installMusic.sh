@@ -20,3 +20,8 @@ export DEBIAN_FRONTEND=noninteractive
 ## calf-plugins: music studio effects and instruments
 ## sooperlooper: music loop station
 apt-get -y install musescore3 audacity adour hydrogen rosegarden qtractor lmms qsyth amsynth jackd qjackctl jack-keyboard a2jmidid vmpk calf-plugins sooperlooper
+
+## Multimedia-Codecs
+apt-get -y install libmp3lame0 libk3b6 libk3b6-extracodecs
+apt-get -y install libavcodec-extra libavcodec-ffmpeg-extra56
+apt-get -y install libxine2 libxine2-ffmpeg
