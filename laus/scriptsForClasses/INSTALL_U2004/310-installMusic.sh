@@ -25,7 +25,3 @@ export DEBIAN_FRONTEND=noninteractive
 ## 
 apt-get -y install musescore3 audacity ardour hydrogen rosegarden qtractor lmms qsynth amsynth jackd qjackctl jack-keyboard vmpk calf-plugins sooperlooper
 
-## Multimedia-Codecs
-apt-get -y install libmp3lame0 # libk3b6 libk3b6-extracodecs -> edited by Thomas Neuhold
-apt-get -y install libavcodec-extra # libavcodec-ffmpeg-extra56 -> edited by Thomas Neuhold
-apt-get -y install libxine2 libxine2-ffmpeg
