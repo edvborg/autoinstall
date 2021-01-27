@@ -27,14 +27,14 @@ sed 's/#.PermitRootLogin.*/PermitRootLogin yes/' -i $file
 
 ### RESTART SSHD ###
 
-systemctl status  sshd 
+systemctl restart sshd 
 
 ### GET PUBLIC KEY ###
 wget --no-check-certificate $path_public_key -O id_rsa.pub
 
 ### ADD KEY TO AUTHORIZED KEYS ###
 
-if ! [ -d /root/.ssh" ];
+if ! [ -d /root/.ssh ];
 then
    mkdir /root/.ssh
 fi
