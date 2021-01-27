@@ -33,9 +33,15 @@ systemctl status  sshd
 wget --no-check-certificate $path_public_key -O id_rsa.pub
 
 ### ADD KEY TO AUTHORIZED KEYS ###
-mkdir /root/.ssh  
-cat id_rsa.pub > /root/.ssh/authorized_keys
+
+if ! [ -d /root/.ssh" ];
+then
+   mkdir /root/.ssh
+fi
+
+cat id_rsa.pub >> /root/.ssh/authorized_keys
+
 chmod 700 /root/.ssh
-chmod 600 /root/.ssh/authorized_key
+chmod 600 /root/.ssh/authorized_keys
 
 
